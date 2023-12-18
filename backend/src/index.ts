@@ -1,14 +1,19 @@
-import express, { Request, Response } from "express";
+import express, { Request, Response, NextFunction } from "express";
 import taskRoutes from "./routes/tasks";
 
 const app = express();
 const port = process.env.PORT || 3001;
 
-app.use(express.json()); // Add this line to enable JSON parsing in the request body
-app.use("/tasks", taskRoutes); // Add this line to mount the Task API routes
+app.use(express.json());
+app.use("/tasks", taskRoutes);
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, World!");
+});
+
+app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+  console.error(err.stack);
+  res.status(500).send("Something went wrong");
 });
 
 app.listen(port, () => {
