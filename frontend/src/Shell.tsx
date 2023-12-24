@@ -60,19 +60,27 @@ const Container = ({ title, children }: ContainerProps) => {
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={"a"} href="/meal-planner">
+            <ListItemButton component={"a"} href="/planner">
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary={"Meal Planner"} />
+              <ListItemText primary={"Planner"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
-            <ListItemButton component={"a"} href="/meal-builder">
+            <ListItemButton component={"a"} href="/meals">
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
-              <ListItemText primary={"Meal Builder"} />
+              <ListItemText primary={"Meals"} />
+            </ListItemButton>
+          </ListItem>
+          <ListItem disablePadding>
+            <ListItemButton component={"a"} href="/ingredients">
+              <ListItemIcon>
+                <InboxIcon />
+              </ListItemIcon>
+              <ListItemText primary={"Ingredients"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
@@ -87,7 +95,16 @@ const Container = ({ title, children }: ContainerProps) => {
       </Drawer>
       <Box
         component="main"
-        sx={{ flexGrow: 1, bgcolor: "background.default", p: 3 }}
+        sx={{
+          backgroundColor: (theme) =>
+            theme.palette.mode === "light"
+              ? theme.palette.grey[100]
+              : theme.palette.grey[900],
+          flexGrow: 1,
+          height: "100vh",
+          overflow: "auto",
+          p: 3,
+        }}
       >
         <Toolbar />
         {children}

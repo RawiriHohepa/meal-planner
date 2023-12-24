@@ -1,8 +1,9 @@
 import { Typography } from "@mui/material";
 
-const DashboardPage = () => {
+const IngredientsPage = () => {
   return (
     <>
+      <Typography paragraph>Ingredients</Typography>
       <Typography paragraph>
         Exorcizamus te, omnis immundus spiritus, omnis satanica potestas, omnis
         incursio infernalis adversarii, omnis legio, omnis congregatio et secta
@@ -27,4 +28,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default IngredientsPage;

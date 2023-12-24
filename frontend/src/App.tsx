@@ -1,5 +1,9 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import DashboardPage from "./pages/DashboardPage";
+import PlannerPage from "./pages/PlannerPage";
+import MealsPage from "./pages/MealsPage";
+import IngredientsPage from "./pages/IngredientsPage";
+import ShoppingListPage from "./pages/ShoppingListPage";
 import Shell from "./Shell";
 
 const App = () => {
@@ -16,18 +20,26 @@ const App = () => {
             }
           />
           <Route
-            path="/meal-planner"
+            path="/planner"
             element={
-              <Shell title="Meal Planner">
-                <DashboardPage />
+              <Shell title="Planner">
+                <PlannerPage />
               </Shell>
             }
           />
           <Route
-            path="/meal-builder"
+            path="/meals"
             element={
-              <Shell title="Meal Builder">
-                <DashboardPage />
+              <Shell title="Meals">
+                <MealsPage />
+              </Shell>
+            }
+          />
+          <Route
+            path="/ingredients"
+            element={
+              <Shell title="Ingredients">
+                <IngredientsPage />
               </Shell>
             }
           />
@@ -35,7 +47,7 @@ const App = () => {
             path="/shopping-list"
             element={
               <Shell title="Shopping List">
-                <DashboardPage />
+                <ShoppingListPage />
               </Shell>
             }
           />
