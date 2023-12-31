@@ -1,13 +1,13 @@
 import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import AddIcon from "@mui/icons-material/Add";
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/DeleteOutlined";
-import SaveIcon from "@mui/icons-material/Save";
-import CancelIcon from "@mui/icons-material/Close";
+import { Box, Button } from "@mui/material";
 import {
-  GridRowsProp,
+  Add as AddIcon,
+  Edit as EditIcon,
+  DeleteOutlined as DeleteIcon,
+  Save as SaveIcon,
+  Close as CancelIcon,
+} from "@mui/icons-material";
+import {
   GridRowModesModel,
   GridRowModes,
   DataGrid,
@@ -18,9 +18,11 @@ import {
   GridRowId,
   GridRowModel,
   GridRowEditStopReasons,
+  GridValidRowModel,
 } from "@mui/x-data-grid";
+import useCrud from "../hooks/useCrudState";
 
-const initialRows: GridRowsProp = [
+const initialRows: GridValidRowModel[] = [
   {
     id: 1,
     name: "1",
@@ -59,21 +61,23 @@ const initialRows: GridRowsProp = [
 ];
 
 interface EditToolbarProps {
-  setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+  // setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
+  addItem: (item: GridValidRowModel) => void;
   setRowModesModel: (
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel
   ) => void;
+  nextId: number;
 }
 
 function EditToolbar(props: EditToolbarProps) {
-  const { setRows, setRowModesModel } = props;
+  const { addItem, setRowModesModel, nextId } = props;
 
   const handleClick = () => {
-    const id = 10;
-    setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
+    // setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
+    addItem({ id: nextId, name: "", age: "", isNew: true });
     setRowModesModel((oldModel) => ({
       ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
+      [nextId]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
     }));
   };
 
@@ -87,7 +91,13 @@ function EditToolbar(props: EditToolbarProps) {
 }
 
 export default function FullFeaturedCrudGrid() {
-  const [rows, setRows] = React.useState(initialRows);
+  const { items, addItems, initialiseItems, addItem, removeItem, updateItem } =
+    useCrud<GridValidRowModel>(
+      (item1, item2) => item1.id === item2.id,
+      initialRows
+    );
+
+  // const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
@@ -109,25 +119,29 @@ export default function FullFeaturedCrudGrid() {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (id: GridRowId) => () => {
-    setRows(rows.filter((row) => row.id !== id));
+  const handleDeleteClick = (row: GridValidRowModel) => () => {
+    // setRows(rows.filter((row) => row.id !== id));
+    removeItem(row);
   };
 
-  const handleCancelClick = (id: GridRowId) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
+  const handleCancelClick =
+    (id: GridRowId, editedRow: GridValidRowModel) => () => {
+      setRowModesModel({
+        ...rowModesModel,
+        [id]: { mode: GridRowModes.View, ignoreModifications: true },
+      });
 
-    const editedRow = rows.find((row) => row.id === id);
-    if (editedRow!.isNew) {
-      setRows(rows.filter((row) => row.id !== id));
-    }
-  };
+      // const editedRow = rows.find((row) => row.id === id);
+      if (editedRow!.isNew) {
+        // setRows(rows.filter((row) => row.id !== id));
+        removeItem(editedRow);
+      }
+    };
 
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
-    setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    // setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
+    updateItem(updatedRow);
     return updatedRow;
   };
 
@@ -167,7 +181,7 @@ export default function FullFeaturedCrudGrid() {
       headerName: "Actions",
       width: 100,
       cellClassName: "actions",
-      getActions: ({ id }) => {
+      getActions: ({ id, row }) => {
         const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
 
         if (isInEditMode) {
@@ -186,7 +200,7 @@ export default function FullFeaturedCrudGrid() {
               label="Cancel"
               key="Cancel"
               className="textPrimary"
-              onClick={handleCancelClick(id)}
+              onClick={handleCancelClick(id, row)}
               color="inherit"
             />,
           ];
@@ -205,7 +219,7 @@ export default function FullFeaturedCrudGrid() {
             icon={<DeleteIcon />}
             label="Delete"
             key="Delete"
-            onClick={handleDeleteClick(id)}
+            onClick={handleDeleteClick(row)}
             color="inherit"
           />,
         ];
@@ -227,7 +241,7 @@ export default function FullFeaturedCrudGrid() {
       }}
     >
       <DataGrid
-        rows={rows}
+        rows={items}
         columns={columns}
         editMode="row"
         rowModesModel={rowModesModel}
@@ -238,7 +252,7 @@ export default function FullFeaturedCrudGrid() {
           toolbar: EditToolbar,
         }}
         slotProps={{
-          toolbar: { setRows, setRowModesModel },
+          toolbar: { addItem, setRowModesModel, nextId: items.length + 1 },
         }}
       />
     </Box>
