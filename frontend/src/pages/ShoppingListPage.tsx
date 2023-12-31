@@ -1,8 +1,8 @@
-import { Typography } from "@mui/material";
+import { Typography, Paper } from "@mui/material";
 
 const ShoppingListPage = () => {
   return (
-    <>
+    <Paper elevation={2} sx={{ p: 3 }}>
       <Typography paragraph>Shopping List</Typography>
       <Typography paragraph>
         Exorcizamus te, omnis immundus spiritus, omnis satanica potestas, omnis
@@ -24,7 +24,7 @@ const ShoppingListPage = () => {
         maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin
         aliquam ultrices sagittis orci a.
       </Typography>
-    </>
+    </Paper>
   );
 };
 

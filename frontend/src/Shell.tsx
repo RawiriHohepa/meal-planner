@@ -12,6 +12,7 @@ import {
   ListItemButton,
   ListItemIcon,
   ListItemText,
+  Container as MuiContainer,
 } from "@mui/material";
 import { MoveToInbox as InboxIcon } from "@mui/icons-material";
 
@@ -107,7 +108,7 @@ const Container = ({ title, children }: ContainerProps) => {
         }}
       >
         <Toolbar />
-        {children}
+        <MuiContainer>{children}</MuiContainer>
       </Box>
     </Box>
   );
