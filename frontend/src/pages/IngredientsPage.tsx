@@ -1,25 +1,13 @@
-import * as React from "react";
 import { Box, Button, Paper } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 import {
-  Add as AddIcon,
-  Edit as EditIcon,
-  DeleteOutlined as DeleteIcon,
-  Save as SaveIcon,
-  Close as CancelIcon,
-} from "@mui/icons-material";
-import {
-  GridRowModesModel,
-  GridRowModes,
   DataGrid,
   GridColDef,
   GridToolbarContainer,
-  GridActionsCellItem,
-  GridEventListener,
-  GridRowId,
   GridRowModel,
-  GridRowEditStopReasons,
 } from "@mui/x-data-grid";
 import useCrud from "../hooks/useCrudState";
+import useGridRowEditing from "../hooks/useGridRowEditing";
 
 const initialRows: GridRowModel[] = [
   {
@@ -63,111 +51,10 @@ const EditToolbar = ({ handleClick }: { handleClick: () => void }) => {
   return (
     <GridToolbarContainer>
       <Button color="primary" startIcon={<AddIcon />} onClick={handleClick}>
-        Add record
+        New Ingredient
       </Button>
     </GridToolbarContainer>
   );
-};
-
-const gridRowEditModes = (removeItem: (itemToRemove: GridRowModel) => void) => {
-  const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
-    {}
-  );
-
-  const handleRowEditStop: GridEventListener<"rowEditStop"> = (
-    params,
-    event
-  ) => {
-    if (params.reason === GridRowEditStopReasons.rowFocusOut) {
-      event.defaultMuiPrevented = true;
-    }
-  };
-
-  const handleEditClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.Edit } });
-  };
-
-  const handleSaveClick = (id: GridRowId) => () => {
-    setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
-  };
-
-  const handleDeleteClick = (row: GridRowModel) => () => {
-    removeItem(row);
-  };
-
-  const handleCancelClick = (id: GridRowId, editedRow: GridRowModel) => () => {
-    setRowModesModel({
-      ...rowModesModel,
-      [id]: { mode: GridRowModes.View, ignoreModifications: true },
-    });
-
-    if (editedRow!.isNew) {
-      removeItem(editedRow);
-    }
-  };
-
-  const handleRowModesModelChange = (newRowModesModel: GridRowModesModel) => {
-    setRowModesModel(newRowModesModel);
-  };
-
-  const getActions = ({ id, row }: { id: GridRowId; row: GridRowModel }) => {
-    const isInEditMode = rowModesModel[id]?.mode === GridRowModes.Edit;
-
-    if (isInEditMode) {
-      return [
-        <GridActionsCellItem
-          icon={<SaveIcon />}
-          label="Save"
-          key="Save"
-          sx={{
-            color: "primary.main",
-          }}
-          onClick={handleSaveClick(id)}
-        />,
-        <GridActionsCellItem
-          icon={<CancelIcon />}
-          label="Cancel"
-          key="Cancel"
-          className="textPrimary"
-          onClick={handleCancelClick(id, row)}
-          color="inherit"
-        />,
-      ];
-    }
-
-    return [
-      <GridActionsCellItem
-        icon={<EditIcon />}
-        label="Edit"
-        key="Edit"
-        className="textPrimary"
-        onClick={handleEditClick(id)}
-        color="inherit"
-      />,
-      <GridActionsCellItem
-        icon={<DeleteIcon />}
-        label="Delete"
-        key="Delete"
-        onClick={handleDeleteClick(row)}
-        color="inherit"
-      />,
-    ];
-  };
-
-  const handleAddRecordClick = (id: number) => {
-    setRowModesModel((oldModel) => ({
-      ...oldModel,
-      [id]: { mode: GridRowModes.Edit, fieldToFocus: "name" },
-    }));
-  };
-
-  return {
-    rowModesModel,
-    handleRowEditStop,
-    handleRowModesModelChange,
-    getActions,
-    handleAddRecordClick,
-  };
 };
 
 const IngredientsPage = () => {
@@ -177,12 +64,12 @@ const IngredientsPage = () => {
   );
 
   const {
-    rowModesModel,
+    rowModes,
+    getEditActions,
     handleRowEditStop,
-    handleRowModesModelChange,
-    getActions,
-    handleAddRecordClick,
-  } = gridRowEditModes(removeItem);
+    handleRowModesChange,
+    handleAddRowClick,
+  } = useGridRowEditing(removeItem);
 
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
@@ -193,7 +80,7 @@ const IngredientsPage = () => {
   const handleToolbarClick = () => {
     const id = Math.random() * 100;
     addItem({ id, name: "", age: "", isNew: true });
-    handleAddRecordClick(id);
+    handleAddRowClick(id);
   };
 
   const columns: GridColDef[] = [
@@ -228,7 +115,7 @@ const IngredientsPage = () => {
       headerName: "Actions",
       width: 100,
       cellClassName: "actions",
-      getActions,
+      getActions: getEditActions,
     },
   ];
 
@@ -250,8 +137,8 @@ const IngredientsPage = () => {
           rows={items}
           columns={columns}
           editMode="row"
-          rowModesModel={rowModesModel}
-          onRowModesModelChange={handleRowModesModelChange}
+          rowModesModel={rowModes}
+          onRowModesModelChange={handleRowModesChange}
           onRowEditStop={handleRowEditStop}
           processRowUpdate={processRowUpdate}
           slots={{
