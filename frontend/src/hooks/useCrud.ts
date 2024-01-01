@@ -1,15 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-export type CrudHookType<Type> = {
-  items: Type[];
-  initialiseItems: (initialItems: Type[]) => void;
-  addItem: (item: Type) => void;
-  addItems: (items: Type[]) => void;
-  removeItem: (itemToRemove: Type) => void;
-  updateItem: (updatedItem: Type) => void;
-};
-
 const useCrud = <Type extends { [idProp: string]: string }>(
   baseUrl: string,
   initialState: Type[] = [],
@@ -59,6 +50,7 @@ const useCrud = <Type extends { [idProp: string]: string }>(
       .then((response) => {
         const newItem = response.data;
         setData((existingData) => [...existingData, newItem]);
+        return newItem;
       })
       .catch((err) => {
         // TODO error handling
@@ -67,7 +59,7 @@ const useCrud = <Type extends { [idProp: string]: string }>(
 
   async function deleteItem(item: any) {
     return axios
-      .delete(`${baseUrl}/${item.id}`)
+      .delete(`${baseUrl}/${item[idProp]}`)
       .then((response) => {
         setData((existingData) =>
           existingData.filter((d: any) => d[idProp] !== item[idProp])
@@ -78,7 +70,7 @@ const useCrud = <Type extends { [idProp: string]: string }>(
       });
   }
 
-  return { data, isLoading, reFetch, update, create, deleteItem };
+  return { data, idProp, isLoading, reFetch, update, create, deleteItem };
 };
 
 export default useCrud;

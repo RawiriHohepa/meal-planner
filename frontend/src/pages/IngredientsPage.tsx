@@ -24,12 +24,13 @@ const EditToolbar = ({ handleClick }: { handleClick: () => void }) => {
 const IngredientsPage = () => {
   const {
     data: items,
+    idProp,
     isLoading,
     reFetch,
     update: updateItem,
     create: addItem,
     deleteItem: removeItem,
-  } = useCrud<GridRowModel>("/api/ingredients", [], "id");
+  } = useCrud<GridRowModel>("/api/ingredients");
   // const { items, addItem, removeItem, updateItem } = useCrud<GridRowModel>(
   //   (item1, item2) => item1.id === item2.id,
   //   initialRows
@@ -57,7 +58,7 @@ const IngredientsPage = () => {
       role: "",
       isNew: true,
     });
-    // handleAddRowClick(newRow.id);
+    handleAddRowClick(newRow[idProp]);
   };
 
   const columns: GridColDef[] = [
