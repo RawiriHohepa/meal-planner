@@ -49,10 +49,15 @@ const IngredientsPage = () => {
     return updatedRow;
   };
 
-  const handleToolbarClick = () => {
-    const id = Math.random() * 100;
-    addItem({ id, name: "", age: "", isNew: true });
-    handleAddRowClick(id);
+  const handleToolbarClick = async () => {
+    const newRow = await addItem({
+      name: "",
+      age: "",
+      joinDate: new Date(),
+      role: "",
+      isNew: true,
+    });
+    // handleAddRowClick(newRow.id);
   };
 
   const columns: GridColDef[] = [
@@ -108,6 +113,7 @@ const IngredientsPage = () => {
       >
         <DataGrid
           rows={items}
+          getRowId={(item) => item._id}
           columns={columns}
           editMode="row"
           rowModesModel={rowModes}
