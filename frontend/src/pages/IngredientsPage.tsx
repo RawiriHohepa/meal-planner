@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Box, Button } from "@mui/material";
+import { Box, Button, Paper } from "@mui/material";
 import {
   Add as AddIcon,
   Edit as EditIcon,
@@ -18,11 +18,10 @@ import {
   GridRowId,
   GridRowModel,
   GridRowEditStopReasons,
-  GridValidRowModel,
 } from "@mui/x-data-grid";
 import useCrud from "../hooks/useCrudState";
 
-const initialRows: GridValidRowModel[] = [
+const initialRows: GridRowModel[] = [
   {
     id: 1,
     name: "1",
@@ -61,8 +60,7 @@ const initialRows: GridValidRowModel[] = [
 ];
 
 interface EditToolbarProps {
-  // setRows: (newRows: (oldRows: GridRowsProp) => GridRowsProp) => void;
-  addItem: (item: GridValidRowModel) => void;
+  addItem: (item: GridRowModel) => void;
   setRowModesModel: (
     newModel: (oldModel: GridRowModesModel) => GridRowModesModel
   ) => void;
@@ -73,7 +71,6 @@ function EditToolbar(props: EditToolbarProps) {
   const { addItem, setRowModesModel, nextId } = props;
 
   const handleClick = () => {
-    // setRows((oldRows) => [...oldRows, { id, name: "", age: "", isNew: true }]);
     addItem({ id: nextId, name: "", age: "", isNew: true });
     setRowModesModel((oldModel) => ({
       ...oldModel,
@@ -90,14 +87,10 @@ function EditToolbar(props: EditToolbarProps) {
   );
 }
 
-export default function FullFeaturedCrudGrid() {
+const IngredientsPage = () => {
   const { items, addItems, initialiseItems, addItem, removeItem, updateItem } =
-    useCrud<GridValidRowModel>(
-      (item1, item2) => item1.id === item2.id,
-      initialRows
-    );
+    useCrud<GridRowModel>((item1, item2) => item1.id === item2.id, initialRows);
 
-  // const [rows, setRows] = React.useState(initialRows);
   const [rowModesModel, setRowModesModel] = React.useState<GridRowModesModel>(
     {}
   );
@@ -119,28 +112,23 @@ export default function FullFeaturedCrudGrid() {
     setRowModesModel({ ...rowModesModel, [id]: { mode: GridRowModes.View } });
   };
 
-  const handleDeleteClick = (row: GridValidRowModel) => () => {
-    // setRows(rows.filter((row) => row.id !== id));
+  const handleDeleteClick = (row: GridRowModel) => () => {
     removeItem(row);
   };
 
-  const handleCancelClick =
-    (id: GridRowId, editedRow: GridValidRowModel) => () => {
-      setRowModesModel({
-        ...rowModesModel,
-        [id]: { mode: GridRowModes.View, ignoreModifications: true },
-      });
+  const handleCancelClick = (id: GridRowId, editedRow: GridRowModel) => () => {
+    setRowModesModel({
+      ...rowModesModel,
+      [id]: { mode: GridRowModes.View, ignoreModifications: true },
+    });
 
-      // const editedRow = rows.find((row) => row.id === id);
-      if (editedRow!.isNew) {
-        // setRows(rows.filter((row) => row.id !== id));
-        removeItem(editedRow);
-      }
-    };
+    if (editedRow!.isNew) {
+      removeItem(editedRow);
+    }
+  };
 
   const processRowUpdate = (newRow: GridRowModel) => {
     const updatedRow = { ...newRow, isNew: false };
-    // setRows(rows.map((row) => (row.id === newRow.id ? updatedRow : row)));
     updateItem(updatedRow);
     return updatedRow;
   };
@@ -228,33 +216,37 @@ export default function FullFeaturedCrudGrid() {
   ];
 
   return (
-    <Box
-      sx={{
-        height: 500,
-        width: "100%",
-        "& .actions": {
-          color: "text.secondary",
-        },
-        "& .textPrimary": {
-          color: "text.primary",
-        },
-      }}
-    >
-      <DataGrid
-        rows={items}
-        columns={columns}
-        editMode="row"
-        rowModesModel={rowModesModel}
-        onRowModesModelChange={handleRowModesModelChange}
-        onRowEditStop={handleRowEditStop}
-        processRowUpdate={processRowUpdate}
-        slots={{
-          toolbar: EditToolbar,
+    <Paper elevation={2}>
+      <Box
+        sx={{
+          height: 500,
+          width: "100%",
+          "& .actions": {
+            color: "text.secondary",
+          },
+          "& .textPrimary": {
+            color: "text.primary",
+          },
         }}
-        slotProps={{
-          toolbar: { addItem, setRowModesModel, nextId: items.length + 1 },
-        }}
-      />
-    </Box>
+      >
+        <DataGrid
+          rows={items}
+          columns={columns}
+          editMode="row"
+          rowModesModel={rowModesModel}
+          onRowModesModelChange={handleRowModesModelChange}
+          onRowEditStop={handleRowEditStop}
+          processRowUpdate={processRowUpdate}
+          slots={{
+            toolbar: EditToolbar,
+          }}
+          slotProps={{
+            toolbar: { addItem, setRowModesModel, nextId: items.length + 1 },
+          }}
+        />
+      </Box>
+    </Paper>
   );
-}
+};
+
+export default IngredientsPage;
