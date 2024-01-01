@@ -3,6 +3,7 @@ import { connect } from "mongoose";
 import taskRoutes from "./routes/tasks";
 import userRoutes from "./routes/users";
 import templateRoutes from "./routes/template";
+import ingredientRoutes from "./routes/ingredients";
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -19,12 +20,14 @@ app.use("/tasks", taskRoutes);
 
 app.use("/users", userRoutes);
 
+app.use("/api/ingredients", ingredientRoutes);
+
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   console.error(err.stack);
   res.status(500).send("Something went wrong");
 });
 
-connect("mongodb://127.0.0.1:27017").then(() => {
+connect("mongodb://127.0.0.1:27017/meal-planner").then(() => {
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
   });

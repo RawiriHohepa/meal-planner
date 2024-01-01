@@ -5,47 +5,11 @@ import {
   GridColDef,
   GridToolbarContainer,
   GridRowModel,
+  GridValueGetterParams,
 } from "@mui/x-data-grid";
-import useCrud from "../hooks/useCrudState";
+import useCrud from "../hooks/useCrud";
+// import useCrud from "../hooks/useCrudState";
 import useGridRowEditing from "../hooks/useGridRowEditing";
-
-const initialRows: GridRowModel[] = [
-  {
-    id: 1,
-    name: "1",
-    age: 25,
-    joinDate: new Date(),
-    role: "Market",
-  },
-  {
-    id: 2,
-    name: "2",
-    age: 36,
-    joinDate: new Date(),
-    role: "Market",
-  },
-  {
-    id: 3,
-    name: "3",
-    age: 19,
-    joinDate: new Date(),
-    role: "Market",
-  },
-  {
-    id: 4,
-    name: "4",
-    age: 28,
-    joinDate: new Date(),
-    role: "Market",
-  },
-  {
-    id: 5,
-    name: "5",
-    age: 23,
-    joinDate: new Date(),
-    role: "Market",
-  },
-];
 
 const EditToolbar = ({ handleClick }: { handleClick: () => void }) => {
   return (
@@ -58,10 +22,18 @@ const EditToolbar = ({ handleClick }: { handleClick: () => void }) => {
 };
 
 const IngredientsPage = () => {
-  const { items, addItem, removeItem, updateItem } = useCrud<GridRowModel>(
-    (item1, item2) => item1.id === item2.id,
-    initialRows
-  );
+  const {
+    data: items,
+    isLoading,
+    reFetch,
+    update: updateItem,
+    create: addItem,
+    deleteItem: removeItem,
+  } = useCrud<GridRowModel>("/api/ingredients", [], "id");
+  // const { items, addItem, removeItem, updateItem } = useCrud<GridRowModel>(
+  //   (item1, item2) => item1.id === item2.id,
+  //   initialRows
+  // );
 
   const {
     rowModes,
@@ -100,6 +72,7 @@ const IngredientsPage = () => {
       type: "date",
       width: 180,
       editable: true,
+      valueGetter: (params: GridValueGetterParams) => new Date(params.value),
     },
     {
       field: "role",
