@@ -4,6 +4,7 @@ import PlannerPage from "./pages/PlannerPage";
 import MealsPage from "./pages/MealsPage";
 import IngredientsPage from "./pages/IngredientsPage";
 import ShoppingListPage from "./pages/ShoppingListPage";
+import TemplatePage from "./pages/TemplatePage";
 import Shell from "./Shell";
 
 const App = () => {
@@ -48,6 +49,14 @@ const App = () => {
             element={
               <Shell title="Shopping List">
                 <ShoppingListPage />
+              </Shell>
+            }
+          />
+          <Route
+            path="/template"
+            element={
+              <Shell title="Template">
+                <TemplatePage />
               </Shell>
             }
           />

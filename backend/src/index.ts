@@ -14,7 +14,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello, World!");
 });
 
-app.use("/template", templateRoutes);
+app.use("/api/templates", templateRoutes);
 
 app.use("/tasks", taskRoutes);
 
