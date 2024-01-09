@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { Box, Toolbar, Divider, Paper, Tabs, Tab } from "@mui/material";
+import { Box, Button, Toolbar, Divider, Paper, Tabs, Tab } from "@mui/material";
+import NewMealDialog from "../components/NewMealDialog";
+import TabPanel from "../components/TabPanel";
 
+// TODO connect to mongo
 const meals = [
   {
     _id: "111",
@@ -20,65 +23,68 @@ const meals = [
   },
 ];
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
-
-const TabPanel = ({ children, value, index, ...other }: TabPanelProps) => (
-  <div
-    role="tabpanel"
-    hidden={value !== index}
-    id={`simple-tabpanel-${index}`}
-    aria-labelledby={`simple-tab-${index}`}
-    {...other}
-  >
-    {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
-  </div>
-);
-
-const a11yProps = (index: number) => ({
-  id: `simple-tab-${index}`,
-  "aria-controls": `simple-tabpanel-${index}`,
-});
-
 const MealsPage = () => {
   const [selectedMealIndex, setSelectedMealIndex] = useState(0);
+  const [newMealDialogIsOpen, setNewMealDialogIsOpen] = useState(false);
 
   return (
-    <Paper elevation={2}>
-      <Box sx={{ display: "flex" }}>
-        <Box>
-          {/* TODO implement button and popup dialog */}
-          <Toolbar>New Meal</Toolbar>
-          <Divider />
-          <Tabs
-            value={selectedMealIndex}
-            orientation="vertical"
-            onChange={(_, newSelectedMealIndex) =>
-              setSelectedMealIndex(newSelectedMealIndex)
-            }
-          >
+    <>
+      <Paper elevation={2}>
+        <Box sx={{ display: "flex" }}>
+          <Box>
+            <Toolbar>
+              <Button
+                variant="contained"
+                onClick={() => setNewMealDialogIsOpen(true)}
+              >
+                New Meal
+              </Button>
+            </Toolbar>
+            <Divider />
+            <Tabs
+              value={selectedMealIndex}
+              orientation="vertical"
+              onChange={(_, newSelectedMealIndex) =>
+                setSelectedMealIndex(newSelectedMealIndex)
+              }
+            >
+              {meals.map((meal, index) => (
+                <Tab
+                  key={meal._id}
+                  label={meal.name}
+                  id={`simple-tab-${index}`}
+                  aria-controls={`simple-tabpanel-${index}`}
+                />
+              ))}
+            </Tabs>
+          </Box>
+          <Divider orientation="vertical" flexItem />
+          <Box>
+            {/* TODO implement toolbar */}
+            <Toolbar>New Ingredient Autocompleter & Delete button</Toolbar>
+            <Divider />
+            {/* TODO implement table */}
             {meals.map((meal, index) => (
-              <Tab key={meal._id} label={meal.name} {...a11yProps(index)} />
+              <TabPanel value={selectedMealIndex} index={index} key={meal._id}>
+                {meal.name}
+              </TabPanel>
             ))}
-          </Tabs>
+          </Box>
         </Box>
-        <Divider orientation="vertical" flexItem />
-        <Box sx={{ width: "100%" }}>
-          {/* TODO implement toolbar */}
-          <Toolbar>New Ingredient Autocompleter & Delete button</Toolbar>
-          <Divider />
-          {/* TODO implement table */}
-          {meals.map((meal, index) => (
-            <TabPanel value={selectedMealIndex} index={index} key={meal._id}>
-              {meal.name}
-            </TabPanel>
-          ))}
-        </Box>
-      </Box>
-    </Paper>
+      </Paper>
+      <NewMealDialog
+        open={newMealDialogIsOpen}
+        onSubmit={(name) => {
+          meals.push({
+            _id: `${meals.length + 1}`,
+            name,
+          });
+        }}
+        closeDialog={() => {
+          setNewMealDialogIsOpen(false);
+        }}
+      />
+    </>
   );
 };
 
