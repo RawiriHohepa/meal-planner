@@ -1,5 +1,17 @@
 import { useState } from "react";
-import { Box, Button, Toolbar, Divider, Paper, Tabs, Tab } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Button,
+  IconButton,
+  Toolbar,
+  Divider,
+  TextField,
+  Paper,
+  Tabs,
+  Tab,
+} from "@mui/material";
+import { Delete as DeleteIcon } from "@mui/icons-material";
 import NewMealDialog from "../components/NewMealDialog";
 import TabPanel from "../components/TabPanel";
 
@@ -22,6 +34,14 @@ const meals = [
     name: "Meal Four",
   },
 ];
+
+const newMeal = (name?: string) => {
+  if (!name) return;
+  meals.push({
+    _id: `${meals.length + 1}`,
+    name,
+  });
+};
 
 const MealsPage = () => {
   const [selectedMealIndex, setSelectedMealIndex] = useState(0);
@@ -59,9 +79,29 @@ const MealsPage = () => {
             </Tabs>
           </Box>
           <Divider orientation="vertical" flexItem />
-          <Box>
-            {/* TODO implement toolbar */}
-            <Toolbar>New Ingredient Autocompleter & Delete button</Toolbar>
+          <Box sx={{ flexGrow: 1 }}>
+            <Toolbar>
+              {/* TODO implement autocompleter */}
+              <Autocomplete
+                options={[{ label: "Option 1" }]}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    label="Placeholder"
+                    variant="standard"
+                  />
+                )}
+                sx={{ width: 300 }}
+                onChange={(_, value, reason): void => {
+                  // TODO fix not showing up straight away
+                  if (reason === "selectOption") newMeal(value?.label);
+                }}
+              />
+              <Box sx={{ flexGrow: 1 }} />
+              <IconButton color="inherit" aria-label="delete">
+                <DeleteIcon />
+              </IconButton>
+            </Toolbar>
             <Divider />
             {/* TODO implement table */}
             {meals.map((meal, index) => (
@@ -74,12 +114,7 @@ const MealsPage = () => {
       </Paper>
       <NewMealDialog
         open={newMealDialogIsOpen}
-        onSubmit={(name) => {
-          meals.push({
-            _id: `${meals.length + 1}`,
-            name,
-          });
-        }}
+        onSubmit={newMeal}
         closeDialog={() => {
           setNewMealDialogIsOpen(false);
         }}
