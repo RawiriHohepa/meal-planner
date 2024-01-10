@@ -6,13 +6,13 @@ import {
   Toolbar,
   Divider,
   Paper,
-  Tabs,
-  Tab,
+  List,
+  ListItemButton,
+  Typography,
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
 import AddIngredientAutocompleter from "../components/AddIngredientAutocompleter";
 import NewMealDialog from "../components/NewMealDialog";
-import TabPanel from "../components/TabPanel";
 import useCrud from "../hooks/useCrud";
 
 // interface Meal {
@@ -25,13 +25,14 @@ import useCrud from "../hooks/useCrud";
 // }
 
 const MealsPage = () => {
-  const [selectedMealIndex, setSelectedMealIndex] = useState(0);
+  const [selectedMeal, setSelectedMeal] = useState<any>();
   const [newMealDialogIsOpen, setNewMealDialogIsOpen] = useState(false);
 
   const {
     data: meals,
+    update: updateMeal,
     create: createMeal,
-    // deleteItem: deleteMeal,
+    deleteItem: deleteMeal,
   } = useCrud("/api/meals");
 
   const { data: ingredients } = useCrud("/api/ingredients");
@@ -57,46 +58,42 @@ const MealsPage = () => {
               </Button>
             </Toolbar>
             <Divider />
-            <Tabs
-              value={selectedMealIndex}
-              orientation="vertical"
-              onChange={(_, newSelectedMealIndex) =>
-                setSelectedMealIndex(newSelectedMealIndex)
-              }
-            >
-              {meals.map((meal, index) => (
-                <Tab
+            <List>
+              {meals.map((meal) => (
+                <ListItemButton
                   key={meal._id}
-                  label={meal.name}
-                  id={`simple-tab-${index}`}
-                  aria-controls={`simple-tabpanel-${index}`}
-                />
+                  selected={selectedMeal === meal}
+                  onClick={() => setSelectedMeal(meal)}
+                >
+                  {meal.name}
+                </ListItemButton>
               ))}
-            </Tabs>
+            </List>
           </Box>
           <Divider orientation="vertical" flexItem />
           <Box sx={{ flexGrow: 1 }}>
             <Toolbar>
               <AddIngredientAutocompleter
                 ingredients={ingredients}
-                onSelect={(ingredient) => newMeal(ingredient.name)}
+                onSelect={(ingredient) =>
+                  updateMeal({
+                    ...selectedMeal,
+                    ingredients: selectedMeal.ingredients.push(ingredient),
+                  })
+                }
               />
               <Box sx={{ flexGrow: 1 }} />
               <IconButton
                 color="inherit"
                 aria-label="delete"
-                // TODO Delete meal
+                onClick={() => !!selectedMeal && deleteMeal(selectedMeal)}
               >
                 <DeleteIcon />
               </IconButton>
             </Toolbar>
             <Divider />
             {/* TODO implement table */}
-            {meals.map((meal, index) => (
-              <TabPanel value={selectedMealIndex} index={index} key={meal._id}>
-                {meal.name}
-              </TabPanel>
-            ))}
+            <Typography sx={{ p: 3 }}>{selectedMeal?.name}</Typography>
           </Box>
         </Box>
       </Paper>
