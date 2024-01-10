@@ -6,7 +6,8 @@ interface Ingredient {
 }
 
 interface AddIngredientAutocompleterProps {
-  ingredients: Ingredient[];
+  ingredients: any[];
+  //   ingredients: Ingredient[];
   onSelect: (ingredient: Ingredient) => void;
 }
 

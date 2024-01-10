@@ -13,54 +13,35 @@ import { Delete as DeleteIcon } from "@mui/icons-material";
 import AddIngredientAutocompleter from "../components/AddIngredientAutocompleter";
 import NewMealDialog from "../components/NewMealDialog";
 import TabPanel from "../components/TabPanel";
+import useCrud from "../hooks/useCrud";
 
-// TODO connect to mongo
-const ingredients = [
-  {
-    _id: "11",
-    name: "Ingredient One",
-  },
-  {
-    _id: "22",
-    name: "Ingredient Two",
-  },
-  {
-    _id: "33",
-    name: "Ingredient Three",
-  },
-];
-
-// TODO connect to mongo
-const meals = [
-  {
-    _id: "111",
-    name: "Meal One",
-  },
-  {
-    _id: "222",
-    name: "Meal Two",
-  },
-  {
-    _id: "333",
-    name: "Meal Three",
-  },
-  {
-    _id: "444",
-    name: "Meal Four",
-  },
-];
-
-const newMeal = (name?: string) => {
-  if (!name) return;
-  meals.push({
-    _id: `${meals.length + 1}`,
-    name,
-  });
-};
+// interface Meal {
+//   _id: string;
+//   name: string;
+//   ingredients: {
+//     _id: string;
+//     name: string;
+//   }[];
+// }
 
 const MealsPage = () => {
   const [selectedMealIndex, setSelectedMealIndex] = useState(0);
   const [newMealDialogIsOpen, setNewMealDialogIsOpen] = useState(false);
+
+  const {
+    data: meals,
+    create: createMeal,
+    // deleteItem: deleteMeal,
+  } = useCrud("/api/meals");
+
+  const { data: ingredients } = useCrud("/api/ingredients");
+
+  const newMeal = (name?: string) => {
+    if (!name) return;
+    createMeal({
+      name,
+    });
+  };
 
   return (
     <>
@@ -101,7 +82,11 @@ const MealsPage = () => {
                 onSelect={(ingredient) => newMeal(ingredient.name)}
               />
               <Box sx={{ flexGrow: 1 }} />
-              <IconButton color="inherit" aria-label="delete">
+              <IconButton
+                color="inherit"
+                aria-label="delete"
+                // TODO Delete meal
+              >
                 <DeleteIcon />
               </IconButton>
             </Toolbar>

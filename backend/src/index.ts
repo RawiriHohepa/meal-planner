@@ -3,6 +3,7 @@ import { connect } from "mongoose";
 import taskRoutes from "./routes/tasks";
 import userRoutes from "./routes/users";
 import templateRoutes from "./routes/template";
+import mealRoutes from "./routes/meals";
 import ingredientRoutes from "./routes/ingredients";
 
 const app = express();
@@ -19,6 +20,8 @@ app.use("/api/templates", templateRoutes);
 app.use("/tasks", taskRoutes);
 
 app.use("/users", userRoutes);
+
+app.use("/api/meals", mealRoutes);
 
 app.use("/api/ingredients", ingredientRoutes);
 
