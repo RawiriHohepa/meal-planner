@@ -172,7 +172,7 @@ const MealsPage = () => {
               <IconButton
                 color="inherit"
                 aria-label="delete"
-                onClick={() => !!selectedMeal && deleteMeal(selectedMeal)}
+                onClick={() => !!selectedMeal && deleteMeal(selectedMeal)} // TODO add confirmation
               >
                 <DeleteIcon />
               </IconButton>
@@ -194,6 +194,7 @@ const MealsPage = () => {
                   }}
                 >
                   <DataGrid
+                    autoHeight
                     rows={selectedMeal.ingredients}
                     getRowId={(item) => item._id}
                     columns={columns}

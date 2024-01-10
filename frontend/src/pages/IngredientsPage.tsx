@@ -102,7 +102,6 @@ const IngredientsPage = () => {
     <Paper elevation={2}>
       <Box
         sx={{
-          height: 500,
           width: "100%",
           "& .actions": {
             color: "text.secondary",
@@ -113,6 +112,7 @@ const IngredientsPage = () => {
         }}
       >
         <DataGrid
+          autoHeight
           rows={items}
           getRowId={(item) => item._id}
           columns={columns}
