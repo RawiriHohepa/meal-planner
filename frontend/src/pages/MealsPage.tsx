@@ -11,9 +11,18 @@ import {
   Typography,
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
+// import { Add as AddIcon } from "@mui/icons-material";
+import {
+  DataGrid,
+  GridColDef,
+  GridToolbarContainer,
+  GridRowModel,
+  GridValueGetterParams,
+} from "@mui/x-data-grid";
 import AddIngredientAutocompleter from "../components/AddIngredientAutocompleter";
 import NewMealDialog from "../components/NewMealDialog";
 import useCrud from "../hooks/useCrud";
+import useGridRowEditing from "../hooks/useGridRowEditing";
 
 // interface Meal {
 //   _id: string;
@@ -30,6 +39,7 @@ const MealsPage = () => {
 
   const {
     data: meals,
+    // reFetch: reFetchMeals,
     update: updateMeal,
     create: createMeal,
     deleteItem: deleteMeal,
@@ -44,6 +54,82 @@ const MealsPage = () => {
     });
   };
 
+  // const {
+  //   data: items,
+  //   idProp,
+  //   isLoading,
+  //   reFetch,
+  //   update: updateItem,
+  //   create: addItem,
+  //   deleteItem: removeItem,
+  // } = useCrud<GridRowModel>("/api/ingredients");
+  // const { items, addItem, removeItem, updateItem } = useCrud<GridRowModel>(
+  //   (item1, item2) => item1.id === item2.id,
+  //   initialRows
+  // );
+
+  const {
+    rowModes,
+    getEditActions,
+    handleRowEditStop,
+    handleRowModesChange,
+    handleAddRowClick,
+  } = useGridRowEditing(() => console.log("remove"));
+
+  const processRowUpdate = (newRow: GridRowModel) => {
+    // const updatedRow = { ...newRow, isNew: false };
+    // updateItem(updatedRow);
+    // return updatedRow;
+    return newRow;
+  };
+
+  const handleToolbarClick = async () => {
+    // const newRow = await addItem({
+    //   name: "",
+    //   age: "",
+    //   joinDate: new Date(),
+    //   role: "",
+    //   isNew: true,
+    // });
+    // handleAddRowClick(newRow[idProp]);
+  };
+
+  const columns: GridColDef[] = [
+    { field: "name", headerName: "Name", width: 180, editable: true },
+    {
+      field: "age",
+      headerName: "Age",
+      type: "number",
+      // width: 80,
+      align: "left",
+      headerAlign: "left",
+      editable: true,
+    },
+    {
+      field: "joinDate",
+      headerName: "Join date",
+      type: "date",
+      // width: 180,
+      editable: true,
+      valueGetter: (params: GridValueGetterParams) => new Date(params.value),
+    },
+    {
+      field: "role",
+      headerName: "Department",
+      // width: 220,
+      editable: true,
+      type: "singleSelect",
+      valueOptions: ["Market", "Finance", "Development"],
+    },
+    {
+      field: "actions",
+      type: "actions",
+      headerName: "Actions",
+      // width: 100,
+      cellClassName: "actions",
+      getActions: getEditActions,
+    },
+  ];
   return (
     <>
       <Paper elevation={2}>
@@ -78,7 +164,7 @@ const MealsPage = () => {
                 onSelect={(ingredient) =>
                   updateMeal({
                     ...selectedMeal,
-                    ingredients: selectedMeal.ingredients.push(ingredient),
+                    ingredients: [...selectedMeal.ingredients, ingredient],
                   })
                 }
               />
@@ -92,8 +178,38 @@ const MealsPage = () => {
               </IconButton>
             </Toolbar>
             <Divider />
-            {/* TODO implement table */}
-            <Typography sx={{ p: 3 }}>{selectedMeal?.name}</Typography>
+            {!!selectedMeal &&
+              !!selectedMeal.ingredients &&
+              !!selectedMeal.ingredients.length && (
+                <Box
+                  sx={{
+                    // height: 500,
+                    // width: "100%",
+                    "& .actions": {
+                      color: "text.secondary",
+                    },
+                    "& .textPrimary": {
+                      color: "text.primary",
+                    },
+                  }}
+                >
+                  <DataGrid
+                    rows={selectedMeal.ingredients}
+                    getRowId={(item) => item._id}
+                    columns={columns}
+                    editMode="row"
+                    rowModesModel={rowModes}
+                    onRowModesModelChange={handleRowModesChange}
+                    onRowEditStop={handleRowEditStop}
+                    processRowUpdate={processRowUpdate}
+                    slotProps={{
+                      toolbar: {
+                        handleClick: handleToolbarClick,
+                      },
+                    }}
+                  />
+                </Box>
+              )}
           </Box>
         </Box>
       </Paper>
