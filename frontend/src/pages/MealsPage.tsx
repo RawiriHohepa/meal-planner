@@ -1,19 +1,34 @@
 import { useState } from "react";
 import {
-  Autocomplete,
   Box,
   Button,
   IconButton,
   Toolbar,
   Divider,
-  TextField,
   Paper,
   Tabs,
   Tab,
 } from "@mui/material";
 import { Delete as DeleteIcon } from "@mui/icons-material";
+import AddIngredientAutocompleter from "../components/AddIngredientAutocompleter";
 import NewMealDialog from "../components/NewMealDialog";
 import TabPanel from "../components/TabPanel";
+
+// TODO connect to mongo
+const ingredients = [
+  {
+    _id: "11",
+    name: "Ingredient One",
+  },
+  {
+    _id: "22",
+    name: "Ingredient Two",
+  },
+  {
+    _id: "33",
+    name: "Ingredient Three",
+  },
+];
 
 // TODO connect to mongo
 const meals = [
@@ -81,21 +96,9 @@ const MealsPage = () => {
           <Divider orientation="vertical" flexItem />
           <Box sx={{ flexGrow: 1 }}>
             <Toolbar>
-              {/* TODO implement autocompleter */}
-              <Autocomplete
-                options={[{ label: "Option 1" }]}
-                renderInput={(params) => (
-                  <TextField
-                    {...params}
-                    label="Placeholder"
-                    variant="standard"
-                  />
-                )}
-                sx={{ width: 300 }}
-                onChange={(_, value, reason): void => {
-                  // TODO fix not showing up straight away
-                  if (reason === "selectOption") newMeal(value?.label);
-                }}
+              <AddIngredientAutocompleter
+                ingredients={ingredients}
+                onSelect={(ingredient) => newMeal(ingredient.name)}
               />
               <Box sx={{ flexGrow: 1 }} />
               <IconButton color="inherit" aria-label="delete">
