@@ -10,11 +10,11 @@ import {
   Divider,
   ListItem,
   ListItemButton,
-  ListItemIcon,
+  // ListItemIcon,
   ListItemText,
   Container as MuiContainer,
 } from "@mui/material";
-import { MoveToInbox as InboxIcon } from "@mui/icons-material";
+// import { MoveToInbox as InboxIcon } from "@mui/icons-material";
 
 const drawerWidth = 240;
 
@@ -84,14 +84,14 @@ const Container = ({ title, children }: ContainerProps) => {
               <ListItemText primary={"Ingredients"} />
             </ListItemButton>
           </ListItem>
-          <ListItem disablePadding>
+          {/* <ListItem disablePadding>
             <ListItemButton component={"a"} href="/shopping-list">
-              {/* <ListItemIcon>
+              <ListItemIcon>
                 <InboxIcon />
-              </ListItemIcon> */}
+              </ListItemIcon>
               <ListItemText primary={"Shopping List"} />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
         </List>
       </Drawer>
       <Box
