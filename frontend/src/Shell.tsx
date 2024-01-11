@@ -52,43 +52,43 @@ const Container = ({ title, children }: ContainerProps) => {
         <Toolbar />
         <Divider />
         <List>
-          <ListItem disablePadding>
+          {/* <ListItem disablePadding>
             <ListItemButton component={"a"} href="/">
               <ListItemIcon>
                 <InboxIcon />
               </ListItemIcon>
               <ListItemText primary={"Dashboard"} />
             </ListItemButton>
-          </ListItem>
+          </ListItem> */}
           <ListItem disablePadding>
             <ListItemButton component={"a"} href="/planner">
-              <ListItemIcon>
+              {/* <ListItemIcon>
                 <InboxIcon />
-              </ListItemIcon>
+              </ListItemIcon> */}
               <ListItemText primary={"Planner"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton component={"a"} href="/meals">
-              <ListItemIcon>
+              {/* <ListItemIcon>
                 <InboxIcon />
-              </ListItemIcon>
+              </ListItemIcon> */}
               <ListItemText primary={"Meals"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton component={"a"} href="/ingredients">
-              <ListItemIcon>
+              {/* <ListItemIcon>
                 <InboxIcon />
-              </ListItemIcon>
+              </ListItemIcon> */}
               <ListItemText primary={"Ingredients"} />
             </ListItemButton>
           </ListItem>
           <ListItem disablePadding>
             <ListItemButton component={"a"} href="/shopping-list">
-              <ListItemIcon>
+              {/* <ListItemIcon>
                 <InboxIcon />
-              </ListItemIcon>
+              </ListItemIcon> */}
               <ListItemText primary={"Shopping List"} />
             </ListItemButton>
           </ListItem>

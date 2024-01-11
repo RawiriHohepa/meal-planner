@@ -1,30 +1,158 @@
-import { Typography, Paper } from "@mui/material";
+import { useState } from "react";
+import {
+  Paper,
+  MenuItem,
+  FormControl,
+  Select,
+  SelectChangeEvent,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material";
+
+const days = [
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+  "Sunday",
+];
+
+const meals = [
+  {
+    _id: "11",
+    name: "Meal One",
+  },
+  {
+    _id: "22",
+    name: "Meal Two",
+  },
+  {
+    _id: "33",
+    name: "Meal Three",
+  },
+];
 
 const PlannerPage = () => {
+  const [selectedMealsMainDinner, setSelectedMealsMainDinner] = useState<any>(
+    {}
+  );
+  const [selectedMealsSideOne, setSelectedMealsSideOne] = useState<any>({});
+  const [selectedMealsSideTwo, setSelectedMealsSideTwo] = useState<any>({});
+
+  const handleChangeMainDinner = (event: SelectChangeEvent, day: string) => {
+    const mealId = event.target.value as string;
+    setSelectedMealsMainDinner((existingSelectedMeals: any) => ({
+      ...existingSelectedMeals,
+      [day]: mealId,
+    }));
+  };
+
+  const handleChangeSideOne = (event: SelectChangeEvent, day: string) => {
+    const mealId = event.target.value as string;
+    setSelectedMealsSideOne((existingSelectedMeals: any) => ({
+      ...existingSelectedMeals,
+      [day]: mealId,
+    }));
+  };
+
+  const handleChangeSideTwo = (event: SelectChangeEvent, day: string) => {
+    const mealId = event.target.value as string;
+    setSelectedMealsSideTwo((existingSelectedMeals: any) => ({
+      ...existingSelectedMeals,
+      [day]: mealId,
+    }));
+  };
+
   return (
-    <Paper elevation={2} sx={{ p: 3 }}>
-      <Typography paragraph>Planner</Typography>
-      <Typography paragraph>
-        Exorcizamus te, omnis immundus spiritus, omnis satanica potestas, omnis
-        incursio infernalis adversarii, omnis legio, omnis congregatio et secta
-        diabolica. Ergo, draco maledicte. Ecclesiam tuam securi tibi facias
-        libertate servire, te rogamus, audi nos.
-      </Typography>
-      <Typography paragraph>
-        Consequat mauris nunc congue nisi vitae suscipit. Fringilla est
-        ullamcorper eget nulla facilisi etiam dignissim diam. Pulvinar elementum
-        integer enim neque volutpat ac tincidunt. Ornare suspendisse sed nisi
-        lacus sed viverra tellus. Purus sit amet volutpat consequat mauris.
-        Elementum eu facilisis sed odio morbi. Euismod lacinia at quis risus sed
-        vulputate odio. Morbi tincidunt ornare massa eget egestas purus viverra
-        accumsan in. In hendrerit gravida rutrum quisque non tellus orci ac.
-        Pellentesque nec nam aliquam sem et tortor. Habitant morbi tristique
-        senectus et. Adipiscing elit duis tristique sollicitudin nibh sit.
-        Ornare aenean euismod elementum nisi quis eleifend. Commodo viverra
-        maecenas accumsan lacus vel facilisis. Nulla posuere sollicitudin
-        aliquam ultrices sagittis orci a.
-      </Typography>
-    </Paper>
+    <TableContainer component={Paper} elevation={2}>
+      <Table sx={{ minWidth: 650 }} aria-label="planner table">
+        <TableHead>
+          <TableRow>
+            <TableCell />
+            {days.map((day) => (
+              <TableCell key={day}>{day}</TableCell>
+            ))}
+          </TableRow>
+        </TableHead>
+        <TableBody>
+          <TableRow>
+            <TableCell>Main Dinner</TableCell>
+            {days.map((day) => (
+              <TableCell key={day}>
+                <FormControl sx={{ minWidth: 80 }}>
+                  <Select
+                    value={selectedMealsMainDinner[day]}
+                    onChange={(event) => handleChangeMainDinner(event, day)}
+                    variant="standard"
+                  >
+                    <MenuItem value={undefined}>
+                      <em>None</em>
+                    </MenuItem>
+                    {meals.map((meal) => (
+                      <MenuItem value={meal._id} key={meal._id}>
+                        {meal.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell>Side One</TableCell>
+            {days.map((day) => (
+              <TableCell key={day}>
+                <FormControl sx={{ minWidth: 80 }}>
+                  <Select
+                    value={selectedMealsSideOne[day]}
+                    onChange={(event) => handleChangeSideOne(event, day)}
+                    variant="standard"
+                  >
+                    <MenuItem value={undefined}>
+                      <em>None</em>
+                    </MenuItem>
+                    {meals.map((meal) => (
+                      <MenuItem value={meal._id} key={meal._id}>
+                        {meal.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </TableCell>
+            ))}
+          </TableRow>
+          <TableRow>
+            <TableCell>Side Two</TableCell>
+            {days.map((day) => (
+              <TableCell key={day}>
+                <FormControl sx={{ minWidth: 80 }}>
+                  <Select
+                    value={selectedMealsSideTwo[day]}
+                    onChange={(event) => handleChangeSideTwo(event, day)}
+                    variant="standard"
+                  >
+                    <MenuItem value={undefined}>
+                      <em>None</em>
+                    </MenuItem>
+                    {meals.map((meal) => (
+                      <MenuItem value={meal._id} key={meal._id}>
+                        {meal.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+              </TableCell>
+            ))}
+          </TableRow>
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };
 
