@@ -28,8 +28,8 @@ services:
       - mongo
     ports:
       - 3001:3001
-    expose:
-      - 3001
+    # expose:
+    #   - 3001
     networks:
       - express-mongo
       - react-express
@@ -42,8 +42,8 @@ services:
       - 27017:27017
     networks:
       - express-mongo
-    expose:
-      - 27017
+    # expose:
+    #   - 27017
 networks:
   react-express:
   express-mongo:
