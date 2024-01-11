@@ -1,20 +1,17 @@
 import { ReactElement } from "react";
-import {
-  Box,
-  Drawer,
-  CssBaseline,
-  AppBar,
-  Toolbar,
-  List,
-  Typography,
-  Divider,
-  ListItem,
-  ListItemButton,
-  // ListItemIcon,
-  ListItemText,
-  Container as MuiContainer,
-} from "@mui/material";
-// import { MoveToInbox as InboxIcon } from "@mui/icons-material";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import MuiContainer from "@mui/material/Container";
+import CssBaseline from "@mui/material/CssBaseline";
+import Divider from "@mui/material/Divider";
+import Drawer from "@mui/material/Drawer";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemButton from "@mui/material/ListItemButton";
+import ListItemText from "@mui/material/ListItemText";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+// import InboxIcon from "@mui/icons-material/MoveToInbox";
 
 const drawerWidth = 240;
 

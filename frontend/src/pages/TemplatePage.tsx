@@ -1,5 +1,7 @@
-import { Box, Button, Paper } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import AddIcon from "@mui/icons-material/Add";
 import {
   DataGrid,
   GridColDef,

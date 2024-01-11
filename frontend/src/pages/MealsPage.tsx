@@ -1,24 +1,14 @@
 import { useState } from "react";
-import {
-  Box,
-  Button,
-  IconButton,
-  Toolbar,
-  Divider,
-  Paper,
-  List,
-  ListItemButton,
-  Typography,
-} from "@mui/material";
-import { Delete as DeleteIcon } from "@mui/icons-material";
-// import { Add as AddIcon } from "@mui/icons-material";
-import {
-  DataGrid,
-  GridColDef,
-  GridToolbarContainer,
-  GridRowModel,
-  GridValueGetterParams,
-} from "@mui/x-data-grid";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Divider from "@mui/material/Divider";
+import IconButton from "@mui/material/IconButton";
+import List from "@mui/material/List";
+import ListItemButton from "@mui/material/ListItemButton";
+import Paper from "@mui/material/Paper";
+import Toolbar from "@mui/material/Toolbar";
+import DeleteIcon from "@mui/icons-material/Delete";
+import { DataGrid, GridColDef, GridRowModel } from "@mui/x-data-grid";
 import AddIngredientAutocompleter from "../components/AddIngredientAutocompleter";
 import NewMealDialog from "../components/NewMealDialog";
 import useCrud from "../hooks/useCrud";

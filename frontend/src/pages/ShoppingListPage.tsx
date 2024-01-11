@@ -1,4 +1,5 @@
-import { Typography, Paper } from "@mui/material";
+import Paper from "@mui/material/Paper";
+import Typography from "@mui/material/Typography";
 
 const ShoppingListPage = () => {
   return (

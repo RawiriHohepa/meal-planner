@@ -1,14 +1,14 @@
-import { Box, Button, Paper } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Paper from "@mui/material/Paper";
+import AddIcon from "@mui/icons-material/Add";
 import {
   DataGrid,
   GridColDef,
   GridToolbarContainer,
   GridRowModel,
-  GridValueGetterParams,
 } from "@mui/x-data-grid";
 import useCrud from "../hooks/useCrud";
-// import useCrud from "../hooks/useCrudState";
 import useGridRowEditing from "../hooks/useGridRowEditing";
 
 const EditToolbar = ({ handleClick }: { handleClick: () => void }) => {
@@ -31,10 +31,6 @@ const IngredientsPage = () => {
     create: addItem,
     deleteItem: removeItem,
   } = useCrud<any>("/api/ingredients");
-  // const { items, addItem, removeItem, updateItem } = useCrud<GridRowModel>(
-  //   (item1, item2) => item1.id === item2.id,
-  //   initialRows
-  // );
 
   const {
     rowModes,

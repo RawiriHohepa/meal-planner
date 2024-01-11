@@ -1,21 +1,18 @@
-import {
-  Paper,
-  MenuItem,
-  FormControl,
-  Select,
-  SelectChangeEvent,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-  List,
-  ListItem,
-  ListItemText,
-} from "@mui/material";
-import useCrud from "../hooks/useCrud";
 import { useMemo } from "react";
+import FormControl from "@mui/material/FormControl";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
+import MenuItem from "@mui/material/MenuItem";
+import Paper from "@mui/material/Paper";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import useCrud from "../hooks/useCrud";
 
 const days: (
   | "monday"
