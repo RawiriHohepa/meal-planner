@@ -1,11 +1,9 @@
 import { Schema, model } from "mongoose";
 
 export interface IIngredient {
-  name?: String;
-  age?: Number;
-  joinDate?: Date;
-  role?: String;
-  isNew?: boolean;
+  name: string;
+  unit: string;
+  amount?: number;
 }
 
 export const ingredientSchema = new Schema<IIngredient>({
@@ -14,10 +12,8 @@ export const ingredientSchema = new Schema<IIngredient>({
   // joinDate: { type: Date, required: true },
   // role: { type: String, required: true },
   name: String,
-  age: Number,
-  joinDate: Date,
-  role: String,
-  isNew: Boolean,
+  unit: String,
+  amount: Number,
 });
 
 export const Ingredient = model<IIngredient>("Ingredient", ingredientSchema);

@@ -53,10 +53,8 @@ const IngredientsPage = () => {
   const handleToolbarClick = async () => {
     const newRow = await addItem({
       name: "",
-      age: "",
-      joinDate: new Date(),
-      role: "",
-      isNew: true,
+      unit: "",
+      amount: 0,
     });
     handleAddRowClick(newRow[idProp]);
   };
@@ -64,35 +62,26 @@ const IngredientsPage = () => {
   const columns: GridColDef[] = [
     { field: "name", headerName: "Name", width: 180, editable: true },
     {
-      field: "age",
-      headerName: "Age",
+      field: "amount",
+      headerName: "Amount",
       type: "number",
-      width: 80,
+      // width: 80,
       align: "left",
       headerAlign: "left",
       editable: true,
     },
     {
-      field: "joinDate",
-      headerName: "Join date",
-      type: "date",
-      width: 180,
+      field: "unit",
+      headerName: "Unit",
+      type: "string",
+      // width: 180,
       editable: true,
-      valueGetter: (params: GridValueGetterParams) => new Date(params.value),
-    },
-    {
-      field: "role",
-      headerName: "Department",
-      width: 220,
-      editable: true,
-      type: "singleSelect",
-      valueOptions: ["Market", "Finance", "Development"],
     },
     {
       field: "actions",
       type: "actions",
       headerName: "Actions",
-      width: 100,
+      // width: 100,
       cellClassName: "actions",
       getActions: getEditActions,
     },
@@ -102,7 +91,7 @@ const IngredientsPage = () => {
     <Paper elevation={2}>
       <Box
         sx={{
-          width: "100%",
+          // width: "100%",
           "& .actions": {
             color: "text.secondary",
           },
