@@ -15,6 +15,14 @@ const App = () => {
           <Route
             path="/"
             element={
+              <Shell title="Planner">
+                <PlannerPage />
+              </Shell>
+            }
+          />
+          <Route
+            path="/Dashboard"
+            element={
               <Shell title="Dashboard">
                 <DashboardPage />
               </Shell>
