@@ -79,7 +79,9 @@ const PlannerPage = () => {
   return (
     <TableContainer component={Paper} elevation={2}>
       <Table sx={{ minWidth: 650 }} aria-label="planner table">
-        <TableHead>
+        <TableHead
+          sx={{ "& th::first-letter": { textTransform: "capitalize" } }}
+        >
           <TableRow>
             <TableCell />
             {days.map((day) => (
