@@ -90,7 +90,71 @@ const PlannerPage = () => {
   };
 
   const shoppingList: Ingredient[] = useMemo(() => {
-    return ingredients;
+    const amounts: { [_id: string]: number } = {};
+
+    if (!!mainDinner) {
+      Object.values(mainDinner.selectedMeals).forEach((selectedMealId) => {
+        const meal = meals.find((meal) => meal._id === selectedMealId);
+        if (!!meal) {
+          meal.ingredients.forEach((ingredient) => {
+            if (!!ingredient.amount) {
+              if (!amounts[ingredient._id]) {
+                amounts[ingredient._id] = 0;
+              }
+              amounts[ingredient._id] += ingredient.amount;
+            }
+          });
+        }
+      });
+    }
+
+    if (!!sideOne) {
+      Object.values(sideOne.selectedMeals).forEach((selectedMealId) => {
+        const meal = meals.find((meal) => meal._id === selectedMealId);
+        if (!!meal) {
+          meal.ingredients.forEach((ingredient) => {
+            if (!!ingredient.amount) {
+              if (!amounts[ingredient._id]) {
+                amounts[ingredient._id] = 0;
+              }
+              amounts[ingredient._id] += ingredient.amount;
+            }
+          });
+        }
+      });
+    }
+
+    if (!!sideTwo) {
+      Object.values(sideTwo.selectedMeals).forEach((selectedMealId) => {
+        const meal = meals.find((meal) => meal._id === selectedMealId);
+        if (!!meal) {
+          meal.ingredients.forEach((ingredient) => {
+            if (!!ingredient.amount) {
+              if (!amounts[ingredient._id]) {
+                amounts[ingredient._id] = 0;
+              }
+              amounts[ingredient._id] += ingredient.amount;
+            }
+          });
+        }
+      });
+    }
+
+    const shoppingList: Ingredient[] = [];
+
+    Object.entries(amounts).forEach(([_id, amount]) => {
+      const ingredient = ingredients.find(
+        (ingredient) => ingredient._id === _id
+      );
+      if (!!ingredient) {
+        shoppingList.push({
+          ...ingredient,
+          amount,
+        });
+      }
+    });
+
+    return shoppingList;
   }, [mainDinner, sideOne, sideTwo]);
 
   return (
@@ -191,7 +255,7 @@ const PlannerPage = () => {
           {shoppingList.map((ingredient) => (
             <ListItem key={ingredient._id}>
               <ListItemText primary={ingredient.name} />
-              <em>{`${ingredient.amount}${ingredient.unit}`}</em>
+              <em>{`${ingredient.amount} ${ingredient.unit}`}</em>
             </ListItem>
           ))}
         </List>
