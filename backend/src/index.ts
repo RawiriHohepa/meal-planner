@@ -33,7 +33,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send("Something went wrong");
 });
 
-connect("mongodb://127.0.0.1:27017/meal-planner").then(() => {
+connect("mongodb://host.docker.internal:27017/meal-planner").then(() => {
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
   });
