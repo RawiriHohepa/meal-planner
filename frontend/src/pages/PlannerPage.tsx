@@ -1,4 +1,3 @@
-import { useState } from "react";
 import {
   Paper,
   MenuItem,
@@ -12,61 +11,69 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import useCrud from "../hooks/useCrud";
 
-const days = [
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-  "Sunday",
+const days: (
+  | "monday"
+  | "tuesday"
+  | "wednesday"
+  | "thursday"
+  | "friday"
+  | "saturday"
+  | "sunday"
+)[] = [
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+  "sunday",
 ];
 
-const meals = [
-  {
-    _id: "11",
-    name: "Meal One",
-  },
-  {
-    _id: "22",
-    name: "Meal Two",
-  },
-  {
-    _id: "33",
-    name: "Meal Three",
-  },
-];
+type Planner = {
+  _id: string;
+  name: string;
+  selectedMeals: {
+    monday: string;
+    tuesday: string;
+    wednesday: string;
+    thursday: string;
+    friday: string;
+    saturday: string;
+    sunday: string;
+  };
+};
+
+type Meal = {
+  _id: string;
+  name: string;
+};
 
 const PlannerPage = () => {
-  const [selectedMealsMainDinner, setSelectedMealsMainDinner] = useState<any>(
-    {}
-  );
-  const [selectedMealsSideOne, setSelectedMealsSideOne] = useState<any>({});
-  const [selectedMealsSideTwo, setSelectedMealsSideTwo] = useState<any>({});
+  const { data: meals } = useCrud<Meal>("/api/meals");
+  const { data: planners, update: updatePlanner } =
+    useCrud<Planner>("/api/planner");
 
-  const handleChangeMainDinner = (event: SelectChangeEvent, day: string) => {
-    const mealId = event.target.value as string;
-    setSelectedMealsMainDinner((existingSelectedMeals: any) => ({
-      ...existingSelectedMeals,
-      [day]: mealId,
-    }));
-  };
+  const mainDinner = planners.find((planner) => planner.name === "Main Dinner");
+  const sideOne = planners.find((planner) => planner.name === "Side One");
+  const sideTwo = planners.find((planner) => planner.name === "Side Two");
 
-  const handleChangeSideOne = (event: SelectChangeEvent, day: string) => {
+  const handleChangeSelectedMeal = (
+    event: SelectChangeEvent,
+    day: string,
+    planner?: Planner
+  ) => {
     const mealId = event.target.value as string;
-    setSelectedMealsSideOne((existingSelectedMeals: any) => ({
-      ...existingSelectedMeals,
-      [day]: mealId,
-    }));
-  };
-
-  const handleChangeSideTwo = (event: SelectChangeEvent, day: string) => {
-    const mealId = event.target.value as string;
-    setSelectedMealsSideTwo((existingSelectedMeals: any) => ({
-      ...existingSelectedMeals,
-      [day]: mealId,
-    }));
+    if (!!planner) {
+      updatePlanner({
+        ...planner,
+        selectedMeals: {
+          ...planner.selectedMeals,
+          [day]: mealId,
+        },
+      });
+    }
   };
 
   return (
@@ -87,11 +94,13 @@ const PlannerPage = () => {
               <TableCell key={day}>
                 <FormControl sx={{ minWidth: 80 }}>
                   <Select
-                    value={selectedMealsMainDinner[day]}
-                    onChange={(event) => handleChangeMainDinner(event, day)}
+                    value={mainDinner?.selectedMeals[day] || ""}
+                    onChange={(event) =>
+                      handleChangeSelectedMeal(event, day, mainDinner)
+                    }
                     variant="standard"
                   >
-                    <MenuItem value={undefined}>
+                    <MenuItem value={""}>
                       <em>None</em>
                     </MenuItem>
                     {meals.map((meal) => (
@@ -110,11 +119,13 @@ const PlannerPage = () => {
               <TableCell key={day}>
                 <FormControl sx={{ minWidth: 80 }}>
                   <Select
-                    value={selectedMealsSideOne[day]}
-                    onChange={(event) => handleChangeSideOne(event, day)}
+                    value={sideOne?.selectedMeals[day] || ""}
+                    onChange={(event) =>
+                      handleChangeSelectedMeal(event, day, sideOne)
+                    }
                     variant="standard"
                   >
-                    <MenuItem value={undefined}>
+                    <MenuItem value={""}>
                       <em>None</em>
                     </MenuItem>
                     {meals.map((meal) => (
@@ -133,11 +144,13 @@ const PlannerPage = () => {
               <TableCell key={day}>
                 <FormControl sx={{ minWidth: 80 }}>
                   <Select
-                    value={selectedMealsSideTwo[day]}
-                    onChange={(event) => handleChangeSideTwo(event, day)}
+                    value={sideTwo?.selectedMeals[day] || ""}
+                    onChange={(event) =>
+                      handleChangeSelectedMeal(event, day, sideTwo)
+                    }
                     variant="standard"
                   >
-                    <MenuItem value={undefined}>
+                    <MenuItem value={""}>
                       <em>None</em>
                     </MenuItem>
                     {meals.map((meal) => (

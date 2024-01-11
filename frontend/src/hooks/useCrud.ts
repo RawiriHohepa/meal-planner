@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-const useCrud = <Type extends { [idProp: string]: string }>(
+const useCrud = <Type extends { _id: string }>(
   baseUrl: string,
   initialState: Type[] = [],
   idProp: string = "_id"
@@ -29,13 +29,13 @@ const useCrud = <Type extends { [idProp: string]: string }>(
     setVersion(version + 1);
   }
 
-  async function update(item: Type) {
+  async function update(item: any) {
     return axios
-      .put(`${baseUrl}/${item[idProp]}`, item)
+      .put(`${baseUrl}/${item._id}`, item)
       .then((response) => {
         setData((existingData) =>
-          existingData.map((d: Type) =>
-            d[idProp] === item[idProp] ? { ...d, ...item } : d
+          existingData.map((d: any) =>
+            d._id === item._id ? { ...d, ...item } : d
           )
         );
       })

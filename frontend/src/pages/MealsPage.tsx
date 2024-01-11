@@ -145,7 +145,7 @@ const MealsPage = () => {
             </Toolbar>
             <Divider />
             <List>
-              {meals.map((meal) => (
+              {meals.map((meal: any) => (
                 <ListItemButton
                   key={meal._id}
                   selected={selectedMeal === meal}

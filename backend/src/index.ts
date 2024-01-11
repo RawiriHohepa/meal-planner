@@ -3,6 +3,7 @@ import { connect } from "mongoose";
 import taskRoutes from "./routes/tasks";
 import userRoutes from "./routes/users";
 import templateRoutes from "./routes/template";
+import plannerRoutes from "./routes/planner";
 import mealRoutes from "./routes/meals";
 import ingredientRoutes from "./routes/ingredients";
 
@@ -20,6 +21,8 @@ app.use("/api/templates", templateRoutes);
 app.use("/tasks", taskRoutes);
 
 app.use("/users", userRoutes);
+
+app.use("/api/planner", plannerRoutes);
 
 app.use("/api/meals", mealRoutes);
 

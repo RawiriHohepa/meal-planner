@@ -30,7 +30,7 @@ const IngredientsPage = () => {
     update: updateItem,
     create: addItem,
     deleteItem: removeItem,
-  } = useCrud<GridRowModel>("/api/ingredients");
+  } = useCrud<any>("/api/ingredients");
   // const { items, addItem, removeItem, updateItem } = useCrud<GridRowModel>(
   //   (item1, item2) => item1.id === item2.id,
   //   initialRows

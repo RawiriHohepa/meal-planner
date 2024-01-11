@@ -27,7 +27,7 @@ const TemplatePage = () => {
     update: updateItem,
     create: addItem,
     deleteItem: removeItem,
-  } = useCrud<GridRowModel>("/api/templates");
+  } = useCrud<any>("/api/templates");
 
   const {
     rowModes,
