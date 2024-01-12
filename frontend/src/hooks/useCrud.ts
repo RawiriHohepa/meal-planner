@@ -14,7 +14,7 @@ const useCrud = <Type extends { _id: string }>(
     (async () => {
       setLoading(true);
       axios
-        .get<Type[]>(baseUrl)
+        .get<Type[]>(`http://raspberrypi4.local:3001${baseUrl}`)
         .then((response) => {
           setLoading(false);
           setData(response.data);
@@ -31,7 +31,7 @@ const useCrud = <Type extends { _id: string }>(
 
   async function update(item: any) {
     return axios
-      .put(`${baseUrl}/${item._id}`, item)
+      .put(`http://raspberrypi4.local:3001${baseUrl}/${item._id}`, item)
       .then((response) => {
         setData((existingData) =>
           existingData.map((d: any) =>
@@ -46,7 +46,7 @@ const useCrud = <Type extends { _id: string }>(
 
   async function create(item: any) {
     return axios
-      .post(baseUrl, item)
+      .post(`http://raspberrypi4.local:3001${baseUrl}`, item)
       .then((response) => {
         const newItem = response.data;
         setData((existingData) => [...existingData, newItem]);
@@ -59,7 +59,7 @@ const useCrud = <Type extends { _id: string }>(
 
   async function deleteItem(item: any) {
     return axios
-      .delete(`${baseUrl}/${item[idProp]}`)
+      .delete(`http://raspberrypi4.local:3001${baseUrl}/${item[idProp]}`)
       .then((response) => {
         setData((existingData) =>
           existingData.filter((d: any) => d[idProp] !== item[idProp])
@@ -74,3 +74,4 @@ const useCrud = <Type extends { _id: string }>(
 };
 
 export default useCrud;
+
