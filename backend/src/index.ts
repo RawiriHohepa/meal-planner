@@ -6,6 +6,7 @@ import templateRoutes from "./routes/template";
 import plannerRoutes from "./routes/planner";
 import mealRoutes from "./routes/meals";
 import ingredientRoutes from "./routes/ingredients";
+import cors from "cors";
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -13,6 +14,7 @@ const port = process.env.PORT || 3001;
 const connectionString = "connectionString";
 
 app.use(express.json());
+app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello, World!");
