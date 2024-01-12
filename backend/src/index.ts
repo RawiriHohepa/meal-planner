@@ -9,6 +9,8 @@ import ingredientRoutes from "./routes/ingredients";
 
 const app = express();
 const port = process.env.PORT || 3001;
+// const connectionString = "mongodb://host.docker.internal:27017/meal-planner";
+const connectionString = "connectionString";
 
 app.use(express.json());
 
@@ -33,7 +35,7 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   res.status(500).send("Something went wrong");
 });
 
-connect("mongodb://host.docker.internal:27017/meal-planner").then(() => {
+connect(connectionString).then(() => {
   app.listen(port, () => {
     console.log(`Server running at http://localhost:${port}`);
   });

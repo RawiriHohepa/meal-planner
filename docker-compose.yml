@@ -24,8 +24,8 @@ services:
     volumes:
       - ./backend:/usr/src/app
       - /usr/src/app/node_modules
-    depends_on:
-      - mongo
+    # depends_on:
+    #   - mongo
     ports:
       - 3001:3001
     # expose:
@@ -33,17 +33,17 @@ services:
     networks:
       - express-mongo
       - react-express
-  mongo:
-    restart: always
-    image: mongo
-    volumes:
-      - ./data:/data/db
-    ports:
-      - 27017:27017
-    networks:
-      - express-mongo
-    # expose:
-    #   - 27017
+  # mongo:
+  #   restart: always
+  #   image: mongo
+  #   volumes:
+  #     - ./data:/data/db
+  #   ports:
+  #     - 27017:27017
+  #   networks:
+  #     - express-mongo
+  #   # expose:
+  #   #   - 27017
 networks:
   react-express:
   express-mongo:
