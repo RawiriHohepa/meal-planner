@@ -11,6 +11,7 @@ import ListItemButton from "@mui/material/ListItemButton";
 import ListItemText from "@mui/material/ListItemText";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
+import { useTheme, useMediaQuery } from "@mui/material";
 // import InboxIcon from "@mui/icons-material/MoveToInbox";
 
 const drawerWidth = 240;
@@ -21,12 +22,19 @@ interface ContainerProps {
 }
 
 const Container = ({ title, children }: ContainerProps) => {
+  const theme = useTheme();
+  const isLargeScreen = useMediaQuery(theme.breakpoints.up("lg"));
+
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
-        sx={{ width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }}
+        sx={
+          isLargeScreen
+            ? { width: `calc(100% - ${drawerWidth}px)`, ml: `${drawerWidth}px` }
+            : undefined
+        }
       >
         <Toolbar>
           <Typography variant="h6" noWrap component="div">
@@ -42,6 +50,7 @@ const Container = ({ title, children }: ContainerProps) => {
             width: drawerWidth,
             boxSizing: "border-box",
           },
+          display: isLargeScreen ? undefined : "none",
         }}
         variant="permanent"
         anchor="left"
