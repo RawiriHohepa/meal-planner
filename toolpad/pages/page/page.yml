@@ -8,7 +8,7 @@ spec:
     - G97DVk1
   content:
     - component: DataGrid
-      name: meals
+      name: mealsTable
       props:
         rowsSource: prop
         dataProviderId: meals.ts:default
@@ -17,12 +17,14 @@ spec:
           $$jsExpression: |-
             getMeals.data.map(meal => {
               const portions = meal.portionIds.map(portionId => (
-                getPortions.data.find(portion => portion.id === portionId)
+                portionsTable.rows.find(portion => portion.id === portionId)
               ))
+
+              const portionsFormatted = portions.map(portion => `${portion.amount}${portion.unit || ""} ${portion.ingredient}`)
 
               return {
                 ...meal,
-                portions
+                portions: portionsFormatted
               }
             })
         columns:
@@ -35,7 +37,7 @@ spec:
       layout:
         height: 360
     - component: DataGrid
-      name: portions
+      name: portionsTable
       props:
         rowsSource: prop
         dataProviderId: portions.ts:default
@@ -43,33 +45,38 @@ spec:
         rows:
           $$jsExpression: >-
             getPortions.data.map(portion => {
-              const ingredient = getIngredients.data.find(ingredient => ingredient.id === portion.ingredientId);
+              const ingredient = ingredientsTable.rows.find(ingredient => ingredient.id === portion.ingredientId);
 
               return {
                 ...portion,
-                ingredient,
+                ingredient: ingredient.name,
+                unit: ingredient.unit
               }
             })
         columns:
           - field: id
             type: number
           - field: ingredient
-            type: json
+            type: string
             width: 150
           - field: amount
             type: number
+          - field: unit
+            type: string
     - component: DataGrid
-      name: ingredients
+      name: ingredientsTable
       props:
         rowsSource: prop
         dataProviderId: ingredients.ts:default
-        columns:
-          - field: id
-            type: string
-          - field: name
-            type: string
         rows:
           $$jsExpression: getIngredients.data
+        columns:
+          - field: id
+            type: number
+          - field: name
+            type: string
+          - field: unit
+            type: string
   queries:
     - name: getMeals
       mode: query

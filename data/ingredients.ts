@@ -8,6 +8,7 @@ function generateId(): number {
 export interface Ingredient {
   id: number;
   name: string;
+  unit?: string;
 }
 
 export const ingredients: Ingredient[] = [
@@ -18,9 +19,11 @@ export const ingredients: Ingredient[] = [
   {
     id: generateId(),
     name: "Mince",
+    unit: "g",
   },
   {
     id: generateId(),
     name: "Coconut Cream",
+    unit: " cans",
   },
 ];
