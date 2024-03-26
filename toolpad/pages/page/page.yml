@@ -10,7 +10,7 @@ spec:
     - component: DataGrid
       name: meals
       props:
-        rowsSource: dataProvider
+        rowsSource: prop
         dataProviderId: meals.ts:default
         columns:
           - field: id
@@ -18,23 +18,55 @@ spec:
           - field: name
             type: string
         rowIdField: name
+        rows:
+          $$jsExpression: getMeals.data
       layout:
         height: 360
     - component: DataGrid
       name: ingredients
       props:
-        rowsSource: dataProvider
+        rowsSource: prop
         dataProviderId: ingredients.ts:default
         columns:
           - field: id
             type: string
           - field: name
             type: string
+        rows:
+          $$jsExpression: getIngredients.data
     - component: DataGrid
       name: portions
       props:
-        rowsSource: dataProvider
+        rowsSource: prop
         dataProviderId: portions.ts:default
+        rowIdField: id
+        rows:
+          $$jsExpression: |-
+            getPortions.data.map(portion => ({
+              ...portion,
+              ingredient: getIngredients.data[portion.ingredientId]?.name,
+            }))
         columns:
           - field: id
             type: number
+          - field: ingredient
+            type: string
+            width: 150
+          - field: amount
+            type: number
+  queries:
+    - name: getMeals
+      mode: query
+      query:
+        function: functions.ts#getMeals
+        kind: local
+    - name: getIngredients
+      mode: query
+      query:
+        function: functions.ts#getIngredients
+        kind: local
+    - name: getPortions
+      mode: query
+      query:
+        function: functions.ts#getPortions
+        kind: local

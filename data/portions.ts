@@ -7,16 +7,24 @@ function generateId(): number {
 
 export interface Portion {
   id: number;
+  ingredientId: number;
+  amount: number;
 }
 
 export const portions: Portion[] = [
   {
     id: generateId(),
+    ingredientId: 1,
+    amount: 1,
   },
   {
     id: generateId(),
+    ingredientId: 2,
+    amount: 2,
   },
   {
     id: generateId(),
+    ingredientId: 3,
+    amount: 3,
   },
 ];
