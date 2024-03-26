@@ -30,3 +30,11 @@ spec:
             type: string
           - field: name
             type: string
+    - component: DataGrid
+      name: portions
+      props:
+        rowsSource: dataProvider
+        dataProviderId: portions.ts:default
+        columns:
+          - field: id
+            type: number

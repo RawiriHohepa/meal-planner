@@ -4,7 +4,7 @@
  */
 
 import { createDataProvider } from "@toolpad/studio/server";
-import { Meal, meals } from "../../data/meal";
+import { Meal, meals } from "../../data/meals";
 
 export default createDataProvider({
   async getRecords() {
