@@ -4,54 +4,16 @@
  */
 
 import { createDataProvider } from "@toolpad/studio/server";
-
-let nextId = 1;
-function generateId(): number {
-  const id = nextId;
-  nextId += 1;
-  return id;
-}
-
-interface Meal {
-  id: number;
-  name: string;
-}
-
-const meals: Meal[] = [
-  {
-    id: generateId(),
-    name: "Emily Lee",
-  },
-  {
-    id: generateId(),
-    name: "Liam Patel",
-  },
-  {
-    id: generateId(),
-    name: "Emma Garcia",
-  },
-  {
-    id: generateId(),
-    name: "William Wong",
-  },
-  {
-    id: generateId(),
-    name: "Ava Kim",
-  },
-  {
-    id: generateId(),
-    name: "Ethan Chen",
-  },
-];
+import { Meal, meals } from "../../data/meal";
 
 export default createDataProvider({
-  async getmeals() {
+  async getRecords() {
     return {
-      meals,
+      records: meals,
     };
   },
 
-  async createMeal(data: Meal) {
+  async createRecord(data: Meal) {
     const highestId = meals.reduce(
       (maxId, meal) => Math.max(maxId, meal.id),
       0
@@ -62,14 +24,14 @@ export default createDataProvider({
     return newMeal;
   },
 
-  async updateMeal(id: number, data: Omit<Meal, "id">) {
+  async updateRecord(id: number, data: Omit<Meal, "id">) {
     const index = meals.findIndex((item) => item.id === id);
 
     Object.assign(meals[index], data);
     return meals[index];
   },
 
-  async deleteMeal(id: number) {
+  async deleteRecord(id: number) {
     const index = meals.findIndex((item) => item.id === id);
     meals.splice(index, 1);
   },

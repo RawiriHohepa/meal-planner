@@ -8,11 +8,25 @@ spec:
     - G97DVk1
   content:
     - component: DataGrid
-      name: dataGrid
+      name: meals
       props:
         rowsSource: dataProvider
-        dataProviderId: dataProvider.ts:default
+        dataProviderId: meals.ts:default
         columns:
+          - field: id
+            type: string
           - field: name
             type: string
         rowIdField: name
+      layout:
+        height: 360
+    - component: DataGrid
+      name: ingredients
+      props:
+        rowsSource: dataProvider
+        dataProviderId: ingredients.ts:default
+        columns:
+          - field: id
+            type: string
+          - field: name
+            type: string
