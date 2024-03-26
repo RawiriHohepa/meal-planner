@@ -3,5 +3,29 @@
 apiVersion: v1
 kind: page
 spec:
-  id: G97DVk1
   title: Default page
+  alias:
+    - G97DVk1
+  content:
+    - component: DataGrid
+      name: dataGrid
+      props:
+        rowsSource: dataProvider
+        dataProviderId: dataProvider.ts:default
+        columns:
+          - field: id
+            type: number
+          - field: name
+            type: string
+          - field: account_creation_date
+            type: date
+          - field: country_of_residence
+            type: string
+          - field: phone_number
+            type: number
+          - field: email
+            type: string
+          - field: address
+            type: string
+          - field: gender
+            type: string
