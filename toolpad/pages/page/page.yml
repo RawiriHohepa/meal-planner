@@ -12,16 +12,52 @@ spec:
       props:
         rowsSource: prop
         dataProviderId: meals.ts:default
-        columns:
-          - field: id
-            type: string
-          - field: name
-            type: string
         rowIdField: name
         rows:
-          $$jsExpression: getMeals.data
+          $$jsExpression: |-
+            getMeals.data.map(meal => {
+              const portions = meal.portionIds.map(portionId => (
+                getPortions.data.find(portion => portion.id === portionId)
+              ))
+
+              return {
+                ...meal,
+                portions
+              }
+            })
+        columns:
+          - field: id
+            type: number
+          - field: name
+            type: string
+          - field: portions
+            type: json
       layout:
         height: 360
+    - component: DataGrid
+      name: portions
+      props:
+        rowsSource: prop
+        dataProviderId: portions.ts:default
+        rowIdField: id
+        rows:
+          $$jsExpression: >-
+            getPortions.data.map(portion => {
+              const ingredient = getIngredients.data.find(ingredient => ingredient.id === portion.ingredientId);
+
+              return {
+                ...portion,
+                ingredient,
+              }
+            })
+        columns:
+          - field: id
+            type: number
+          - field: ingredient
+            type: json
+            width: 150
+          - field: amount
+            type: number
     - component: DataGrid
       name: ingredients
       props:
@@ -34,26 +70,6 @@ spec:
             type: string
         rows:
           $$jsExpression: getIngredients.data
-    - component: DataGrid
-      name: portions
-      props:
-        rowsSource: prop
-        dataProviderId: portions.ts:default
-        rowIdField: id
-        rows:
-          $$jsExpression: |-
-            getPortions.data.map(portion => ({
-              ...portion,
-              ingredient: getIngredients.data[portion.ingredientId]?.name,
-            }))
-        columns:
-          - field: id
-            type: number
-          - field: ingredient
-            type: string
-            width: 150
-          - field: amount
-            type: number
   queries:
     - name: getMeals
       mode: query
