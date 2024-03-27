@@ -1,4 +1,5 @@
-import { Schema, model } from "mongoose";
+import { Model, Schema, model } from "mongoose";
+import crudActions from "./crudActions";
 
 export interface IIngredient {
   name: string;
@@ -12,4 +13,11 @@ export const ingredientSchema = new Schema<IIngredient>({
   amount: Number,
 });
 
-export const Ingredient = model<IIngredient>("Ingredient", ingredientSchema);
+export let Ingredient: Model<IIngredient>;
+try {
+  Ingredient = model<IIngredient>("Ingredient");
+} catch (error) {
+  Ingredient = model<IIngredient>("Ingredient", ingredientSchema);
+}
+
+export const { getItems: getIngredients } = crudActions(Ingredient);
