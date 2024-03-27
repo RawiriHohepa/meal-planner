@@ -4,11 +4,18 @@
  */
 
 import { createDataProvider } from "@toolpad/studio/server";
-import { Ingredient, ingredients } from "../../data/ingredients";
+import { connect, model } from "mongoose";
+import { Ingredient, ingredients } from "../../data/json/ingredients";
+
+const IngredientModel = model("Ingredient");
+
+const connectToDb = async () => {
+  await connect(process.env.MONGODB_CONNECTION_STRING || "");
+};
 
 export const getIngredientRecords = async () => {
-  const records = ingredients;
-
+  await connectToDb();
+  const records = await IngredientModel.find();
   return { records };
 };
 

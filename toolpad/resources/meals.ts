@@ -4,7 +4,7 @@
  */
 
 import { createDataProvider } from "@toolpad/studio/server";
-import { Meal, meals } from "../../data/meals";
+import { Meal, meals } from "../../data/json/meals";
 import { getPortionRecords } from "./portions";
 
 export const getMealRecords = async () => {

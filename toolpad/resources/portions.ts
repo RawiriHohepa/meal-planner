@@ -4,15 +4,15 @@
  */
 
 import { createDataProvider } from "@toolpad/studio/server";
-import { Portion, portions } from "../../data/portions";
+import { Portion, portions } from "../../data/json/portions";
 import { getIngredientRecords } from "./ingredients";
 
 export const getPortionRecords = async () => {
   const ingredients = (await getIngredientRecords()).records;
 
   const records = portions.map((portion) => {
-    const ingredient = ingredients.find(
-      (ingredient) => ingredient.id === portion.ingredientId
+    const ingredient = ingredients.find((ingredient) =>
+      ingredient._id.equals("" + portion.ingredientId)
     );
 
     return {

@@ -124,6 +124,8 @@ spec:
             type: number
           - field: unit
             type: string
+          - field: portionId
+            type: string
         rowIdField: id
     - component: DataGrid
       name: ingredientsTable
@@ -133,10 +135,12 @@ spec:
         rows:
           $$jsExpression: getIngredients.data
         columns:
-          - field: id
-            type: number
+          - field: _id
+            type: string
+            width: 230
           - field: name
             type: string
+            width: 192
           - field: unit
             type: string
   queries:
