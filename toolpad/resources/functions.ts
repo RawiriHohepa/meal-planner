@@ -7,3 +7,5 @@ export const getMeals = () => meals;
 export const getIngredients = () => ingredients;
 
 export const getPortions = () => portions;
+
+export const savePlan = (plan: any) => console.log(plan);

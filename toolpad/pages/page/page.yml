@@ -7,6 +7,68 @@ spec:
   alias:
     - G97DVk1
   content:
+    - component: Form
+      name: planForm
+      children:
+        - component: PageRow
+          name: days
+          props:
+            justifyContent: start
+          children:
+            - component: Select
+              name: monday
+              props:
+                options:
+                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                label: Monday
+                name: Monday
+            - component: Select
+              name: tuesday
+              props:
+                options:
+                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                label: Tuesday
+                name: Tuesday
+            - component: Select
+              name: wednesday
+              props:
+                options:
+                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                name: Wednesday
+                label: Wednesday
+            - component: Select
+              name: thursday
+              props:
+                options:
+                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                label: Thursday
+                name: Thursday
+            - component: Select
+              name: friday
+              props:
+                options:
+                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                label: Friday
+                name: Friday
+            - component: Select
+              name: saturday
+              props:
+                options:
+                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                label: Saturday
+                name: Saturday
+            - component: Select
+              name: sunday
+              props:
+                options:
+                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                label: Sunday
+                name: Sunday
+      props:
+        hasResetButton: true
+        formControlsFullWidth: false
+        onSubmit:
+          $$jsExpressionAction: savePlan.call()
     - component: DataGrid
       name: mealsTable
       props:
@@ -14,7 +76,7 @@ spec:
         dataProviderId: meals.ts:default
         rowIdField: name
         rows:
-          $$jsExpression: |-
+          $$jsExpression: >-
             getMeals.data.map(meal => {
               const portions = meal.portionIds.map(portionId => (
                 portionsTable.rows.find(portion => portion.id === portionId)
@@ -41,7 +103,6 @@ spec:
       props:
         rowsSource: prop
         dataProviderId: portions.ts:default
-        rowIdField: id
         rows:
           $$jsExpression: >-
             getPortions.data.map(portion => {
@@ -63,6 +124,7 @@ spec:
             type: number
           - field: unit
             type: string
+        rowIdField: id
     - component: DataGrid
       name: ingredientsTable
       props:
@@ -93,3 +155,21 @@ spec:
       query:
         function: functions.ts#getPortions
         kind: local
+    - name: savePlan
+      mode: mutation
+      query:
+        function: functions.ts#savePlan
+        kind: local
+      parameters:
+        - name: plan
+          value:
+            $$jsExpression: |-
+              (() => {
+                let plan = {}
+
+                Object.entries(planForm.value).forEach(([day, name]) => {
+                  plan[day] = mealsTable.rows.find(row => row.name === name);
+                });
+
+                return plan;
+              })()
