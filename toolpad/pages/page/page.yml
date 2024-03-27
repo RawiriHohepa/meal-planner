@@ -19,49 +19,49 @@ spec:
               name: monday
               props:
                 options:
-                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name)
                 label: Monday
                 name: Monday
             - component: Select
               name: tuesday
               props:
                 options:
-                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name)
                 label: Tuesday
                 name: Tuesday
             - component: Select
               name: wednesday
               props:
                 options:
-                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name)
                 name: Wednesday
                 label: Wednesday
             - component: Select
               name: thursday
               props:
                 options:
-                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name)
                 label: Thursday
                 name: Thursday
             - component: Select
               name: friday
               props:
                 options:
-                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name)
                 label: Friday
                 name: Friday
             - component: Select
               name: saturday
               props:
                 options:
-                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name)
                 label: Saturday
                 name: Saturday
             - component: Select
               name: sunday
               props:
                 options:
-                  $$jsExpression: mealsTable.rows.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name)
                 label: Sunday
                 name: Sunday
       props:
@@ -72,7 +72,7 @@ spec:
     - component: DataGrid
       name: mealsTable
       props:
-        rowsSource: prop
+        rowsSource: dataProvider
         dataProviderId: meals.ts:default
         rowIdField: name
         rows:
@@ -101,7 +101,7 @@ spec:
     - component: DataGrid
       name: portionsTable
       props:
-        rowsSource: prop
+        rowsSource: dataProvider
         dataProviderId: portions.ts:default
         rows:
           $$jsExpression: >-
@@ -128,7 +128,7 @@ spec:
     - component: DataGrid
       name: ingredientsTable
       props:
-        rowsSource: prop
+        rowsSource: dataProvider
         dataProviderId: ingredients.ts:default
         rows:
           $$jsExpression: getIngredients.data
@@ -143,17 +143,7 @@ spec:
     - name: getMeals
       mode: query
       query:
-        function: functions.ts#getMeals
-        kind: local
-    - name: getIngredients
-      mode: query
-      query:
-        function: functions.ts#getIngredients
-        kind: local
-    - name: getPortions
-      mode: query
-      query:
-        function: functions.ts#getPortions
+        function: meals.ts#getMealRecords
         kind: local
     - name: savePlan
       mode: mutation
@@ -163,13 +153,4 @@ spec:
       parameters:
         - name: plan
           value:
-            $$jsExpression: |-
-              (() => {
-                let plan = {}
-
-                Object.entries(planForm.value).forEach(([day, name]) => {
-                  plan[day] = mealsTable.rows.find(row => row.name === name);
-                });
-
-                return plan;
-              })()
+            $$jsExpression: planForm.value

@@ -1,11 +1,12 @@
-import { ingredients } from "../../data/ingredients";
-import { meals } from "../../data/meals";
-import { portions } from "../../data/portions";
+import { getMealRecords } from "./meals";
 
-export const getMeals = () => meals;
+export const savePlan = async (plan: any) => {
+  const meals = (await getMealRecords()).records;
+  let populatedPlan = {};
 
-export const getIngredients = () => ingredients;
+  Object.entries(plan).forEach(([day, name]) => {
+    populatedPlan[day] = meals.find((row) => row.name === name);
+  });
 
-export const getPortions = () => portions;
-
-export const savePlan = (plan: any) => console.log(plan);
+  console.log(populatedPlan);
+};
