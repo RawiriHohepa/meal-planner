@@ -4,14 +4,10 @@
  */
 
 import { createDataProvider } from "@toolpad/studio/server";
-import { connect } from "mongoose";
-// import { Meal, meals } from "../../data/json/meals";
 import { getPortionRecords } from "./portions";
+import connectToDb from "../../data/connectToDb";
+// import { Meal, meals } from "../../data/json/meals";
 import { getMeals } from "../../data/meal";
-
-const connectToDb = async () => {
-  await connect(process.env.MONGODB_CONNECTION_STRING || "");
-};
 
 export const getMealRecords = async () => {
   const portionRecords = (await getPortionRecords()).records;
