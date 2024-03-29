@@ -17,16 +17,20 @@ const mongooseCrudActions = <IMongooseModel>(
     return dbItem;
   };
 
-  const updateItem = async (item: IMongooseModel & { _id: string }) => {
-    const result = await MongooseModel.findByIdAndUpdate(item._id, item, {
-      new: true,
-      useFindAndModify: false,
-    });
-    return !!result;
+  const updateItem = async (_id: string, item: IMongooseModel) => {
+    const result = await MongooseModel.findByIdAndUpdate(
+      _id,
+      { ...item, _id },
+      {
+        new: true,
+        useFindAndModify: false,
+      }
+    );
+    return result;
   };
 
-  const deleteItem = async (id: string) => {
-    await MongooseModel.deleteOne({ _id: id });
+  const deleteItem = async (_id: string) => {
+    await MongooseModel.deleteOne({ _id });
   };
 
   return {

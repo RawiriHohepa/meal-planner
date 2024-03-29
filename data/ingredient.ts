@@ -20,4 +20,9 @@ try {
   Ingredient = model<IIngredient>("Ingredient", ingredientSchema);
 }
 
-export const { getItems: getIngredients } = crudActions(Ingredient);
+export const {
+  getItems: getIngredients,
+  createItem: createIngredient,
+  updateItem: updateIngredient,
+  deleteItem: deleteIngredient,
+} = crudActions(Ingredient);

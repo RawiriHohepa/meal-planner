@@ -6,7 +6,13 @@
 import { createDataProvider } from "@toolpad/studio/server";
 import connectToDb from "../../data/connectToDb";
 // import { Ingredient, ingredients } from "../../data/json/ingredients";
-import { getIngredients } from "../../data/ingredient";
+import {
+  IIngredient,
+  getIngredients,
+  createIngredient,
+  updateIngredient,
+  deleteIngredient,
+} from "../../data/ingredient";
 
 export const getIngredientRecords = async () => {
   await connectToDb();
@@ -14,34 +20,21 @@ export const getIngredientRecords = async () => {
   return { records };
 };
 
-// const createIngredientRecord = async (data: Ingredient) => {
-//   const highestId = ingredients.reduce(
-//     (maxId, ingredient) => Math.max(maxId, ingredient.id),
-//     0
-//   );
-//   const newIngredient = { ...data, id: highestId + 1 };
-//   ingredients.push(newIngredient);
-//   return newIngredient;
-// };
+const createIngredientRecord = async (data: IIngredient) => {
+  return await createIngredient(data);
+};
 
-// const updateIngredientRecord = async (
-//   id: number,
-//   data: Omit<Ingredient, "id">
-// ) => {
-//   const index = ingredients.findIndex((item) => item.id === id);
+const updateIngredientRecord = async (_id: string, data: IIngredient) => {
+  return await updateIngredient(_id, data);
+};
 
-//   Object.assign(ingredients[index], data);
-//   return ingredients[index];
-// };
-
-// const deleteIngredientRecord = async (id: number) => {
-//   const index = ingredients.findIndex((item) => item.id === id);
-//   ingredients.splice(index, 1);
-// };
+const deleteIngredientRecord = async (_id: string) => {
+  return await deleteIngredient(_id);
+};
 
 export default createDataProvider({
   getRecords: getIngredientRecords,
-  // createRecord: createIngredientRecord,
-  // updateRecord: updateIngredientRecord,
-  // deleteRecord: deleteIngredientRecord,
+  createRecord: createIngredientRecord,
+  updateRecord: updateIngredientRecord,
+  deleteRecord: deleteIngredientRecord,
 });
