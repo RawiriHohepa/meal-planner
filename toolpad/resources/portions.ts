@@ -4,15 +4,25 @@
  */
 
 import { createDataProvider } from "@toolpad/studio/server";
+import { connect } from "mongoose";
 import { Portion, portions } from "../../data/json/portions";
+import { getPortions } from "../../data/portion";
 import { getIngredientRecords } from "./ingredients";
+
+const connectToDb = async () => {
+  await connect(process.env.MONGODB_CONNECTION_STRING || "");
+};
 
 export const getPortionRecords = async () => {
   const ingredients = (await getIngredientRecords()).records;
 
-  const records = portions.map((portion) => {
+  await connectToDb();
+  const portions = await getPortions();
+
+  const records = portions.map((portionObject) => {
+    const portion = portionObject.toJSON();
     const ingredient = ingredients.find((ingredient) =>
-      ingredient._id.equals("" + portion.ingredientId)
+      ingredient._id.equals(portion.ingredientId)
     );
 
     return {
@@ -49,7 +59,7 @@ const deletePortionRecord = async (id: number) => {
 
 export default createDataProvider({
   getRecords: getPortionRecords,
-  createRecord: createPortionRecord,
-  updateRecord: updatePortionRecord,
-  deleteRecord: deletePortionRecord,
+  // createRecord: createPortionRecord,
+  // updateRecord: updatePortionRecord,
+  // deleteRecord: deletePortionRecord,
 });

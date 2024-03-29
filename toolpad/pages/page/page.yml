@@ -115,18 +115,17 @@ spec:
               }
             })
         columns:
-          - field: id
-            type: number
-          - field: ingredient
+          - field: _id
             type: string
-            width: 150
+          - field: ingredientId
+            type: string
           - field: amount
             type: number
           - field: unit
             type: string
-          - field: portionId
+          - field: ingredient
             type: string
-        rowIdField: id
+        rowIdField: _id
     - component: DataGrid
       name: ingredientsTable
       props:
@@ -143,6 +142,7 @@ spec:
             width: 192
           - field: unit
             type: string
+        rowIdField: _id
   queries:
     - name: getMeals
       mode: query

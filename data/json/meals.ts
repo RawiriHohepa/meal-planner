@@ -8,23 +8,23 @@ function generateId(): number {
 export interface Meal {
   id: number;
   name: string;
-  portionIds: number[];
+  portionIds: string[];
 }
 
 export const meals: Meal[] = [
   {
     id: generateId(),
     name: "Mince Wraps",
-    portionIds: [1, 2, 3],
+    portionIds: ["6604d6879a5e5752b37037d8"],
   },
   {
     id: generateId(),
     name: "Chicken Wraps",
-    portionIds: [1, 2],
+    portionIds: ["6604d6879a5e5752b37037d8"],
   },
   {
     id: generateId(),
     name: "Fried Rice",
-    portionIds: [2, 3],
+    portionIds: ["6604d6879a5e5752b37037d8"],
   },
 ];
