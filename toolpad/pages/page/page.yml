@@ -74,7 +74,6 @@ spec:
       props:
         rowsSource: dataProvider
         dataProviderId: meals.ts:default
-        rowIdField: name
         rows:
           $$jsExpression: >-
             getMeals.data.map(meal => {
@@ -90,12 +89,16 @@ spec:
               }
             })
         columns:
-          - field: id
-            type: number
+          - field: _id
+            type: string
+            width: 230
+          - field: portionIds
+            type: json
           - field: name
             type: string
           - field: portions
             type: json
+        rowIdField: _id
       layout:
         height: 360
     - component: DataGrid
@@ -117,6 +120,7 @@ spec:
         columns:
           - field: _id
             type: string
+            width: 230
           - field: ingredientId
             type: string
           - field: amount
