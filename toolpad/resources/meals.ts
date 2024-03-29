@@ -4,15 +4,13 @@
  */
 
 import { createDataProvider } from "@toolpad/studio/server";
-import { getPortionRecords } from "./portions";
-import connectToDb from "../../data/connectToDb";
 import { getMeals, createMeal, updateMeal, deleteMeal } from "../../data/meal";
+import { getPortionRecords } from "./portions";
 
 export const getMealRecords = async () => {
   const portionRecords = (await getPortionRecords()).records;
 
-  await connectToDb();
-  const meals = await getMeals();
+  const meals = (await getMeals()).records;
 
   const records = meals.map((mealObject) => {
     const meal = mealObject.toJSON();

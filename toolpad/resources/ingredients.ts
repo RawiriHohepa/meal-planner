@@ -4,7 +4,6 @@
  */
 
 import { createDataProvider } from "@toolpad/studio/server";
-import connectToDb from "../../data/connectToDb";
 import {
   getIngredients,
   createIngredient,
@@ -12,14 +11,8 @@ import {
   deleteIngredient,
 } from "../../data/ingredient";
 
-export const getIngredientRecords = async () => {
-  await connectToDb();
-  const records = await getIngredients();
-  return { records };
-};
-
 export default createDataProvider({
-  getRecords: getIngredientRecords,
+  getRecords: getIngredients,
   createRecord: createIngredient,
   updateRecord: updateIngredient,
   deleteRecord: deleteIngredient,

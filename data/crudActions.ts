@@ -1,10 +1,17 @@
-import { Model } from "mongoose";
+import { Model, connect } from "mongoose";
+
+const connectToDb = async () => {
+  await connect(process.env.MONGODB_CONNECTION_STRING || "");
+};
 
 const mongooseCrudActions = <IMongooseModel>(
   MongooseModel: Model<IMongooseModel>
 ) => {
   const getItems = async () => {
-    return await MongooseModel.find();
+    await connectToDb();
+    return {
+      records: await MongooseModel.find(),
+    };
   };
 
   const getItem = async (id: string) => {
