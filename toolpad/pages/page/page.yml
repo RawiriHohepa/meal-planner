@@ -19,49 +19,49 @@ spec:
               name: monday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Monday
                 name: Monday
             - component: Select
               name: tuesday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Tuesday
                 name: Tuesday
             - component: Select
               name: wednesday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 name: Wednesday
                 label: Wednesday
             - component: Select
               name: thursday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Thursday
                 name: Thursday
             - component: Select
               name: friday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Friday
                 name: Friday
             - component: Select
               name: saturday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Saturday
                 name: Saturday
             - component: Select
               name: sunday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name)
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Sunday
                 name: Sunday
       props:
@@ -69,25 +69,12 @@ spec:
         formControlsFullWidth: false
         onSubmit:
           $$jsExpressionAction: savePlan.call()
+        submitButtonText: Save
     - component: DataGrid
       name: mealsTable
       props:
         rowsSource: dataProvider
         dataProviderId: meals.ts:default
-        rows:
-          $$jsExpression: >-
-            getMeals.data.map(meal => {
-              const portions = meal.portionIds.map(portionId => (
-                portionsTable.rows.find(portion => portion.id === portionId)
-              ))
-
-              const portionsFormatted = portions.map(portion => `${portion.amount}${portion.unit || ""} ${portion.ingredient}`)
-
-              return {
-                ...meal,
-                portions: portionsFormatted
-              }
-            })
         columns:
           - field: _id
             type: string
@@ -99,24 +86,11 @@ spec:
           - field: portions
             type: json
         rowIdField: _id
-      layout:
-        height: 360
     - component: DataGrid
       name: portionsTable
       props:
         rowsSource: dataProvider
         dataProviderId: portions.ts:default
-        rows:
-          $$jsExpression: >-
-            getPortions.data.map(portion => {
-              const ingredient = ingredientsTable.rows.find(ingredient => ingredient.id === portion.ingredientId);
-
-              return {
-                ...portion,
-                ingredient: ingredient.name,
-                unit: ingredient.unit
-              }
-            })
         columns:
           - field: _id
             type: string
@@ -135,15 +109,12 @@ spec:
       props:
         rowsSource: dataProvider
         dataProviderId: ingredients.ts:default
-        rows:
-          $$jsExpression: getIngredients.data
         columns:
           - field: _id
             type: string
             width: 230
           - field: name
             type: string
-            width: 192
           - field: unit
             type: string
         rowIdField: _id
