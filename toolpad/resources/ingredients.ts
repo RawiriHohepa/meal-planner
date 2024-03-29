@@ -5,7 +5,7 @@
 
 import { createDataProvider } from "@toolpad/studio/server";
 import { connect } from "mongoose";
-import { Ingredient, ingredients } from "../../data/json/ingredients";
+// import { Ingredient, ingredients } from "../../data/json/ingredients";
 import { getIngredients } from "../../data/ingredient";
 
 const connectToDb = async () => {
@@ -18,34 +18,34 @@ export const getIngredientRecords = async () => {
   return { records };
 };
 
-const createIngredientRecord = async (data: Ingredient) => {
-  const highestId = ingredients.reduce(
-    (maxId, ingredient) => Math.max(maxId, ingredient.id),
-    0
-  );
-  const newIngredient = { ...data, id: highestId + 1 };
-  ingredients.push(newIngredient);
-  return newIngredient;
-};
+// const createIngredientRecord = async (data: Ingredient) => {
+//   const highestId = ingredients.reduce(
+//     (maxId, ingredient) => Math.max(maxId, ingredient.id),
+//     0
+//   );
+//   const newIngredient = { ...data, id: highestId + 1 };
+//   ingredients.push(newIngredient);
+//   return newIngredient;
+// };
 
-const updateIngredientRecord = async (
-  id: number,
-  data: Omit<Ingredient, "id">
-) => {
-  const index = ingredients.findIndex((item) => item.id === id);
+// const updateIngredientRecord = async (
+//   id: number,
+//   data: Omit<Ingredient, "id">
+// ) => {
+//   const index = ingredients.findIndex((item) => item.id === id);
 
-  Object.assign(ingredients[index], data);
-  return ingredients[index];
-};
+//   Object.assign(ingredients[index], data);
+//   return ingredients[index];
+// };
 
-const deleteIngredientRecord = async (id: number) => {
-  const index = ingredients.findIndex((item) => item.id === id);
-  ingredients.splice(index, 1);
-};
+// const deleteIngredientRecord = async (id: number) => {
+//   const index = ingredients.findIndex((item) => item.id === id);
+//   ingredients.splice(index, 1);
+// };
 
 export default createDataProvider({
   getRecords: getIngredientRecords,
-  createRecord: createIngredientRecord,
-  updateRecord: updateIngredientRecord,
-  deleteRecord: deleteIngredientRecord,
+  // createRecord: createIngredientRecord,
+  // updateRecord: updateIngredientRecord,
+  // deleteRecord: deleteIngredientRecord,
 });
