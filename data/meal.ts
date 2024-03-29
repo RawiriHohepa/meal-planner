@@ -21,4 +21,9 @@ try {
   Meal = model<IMeal>("Meal", mealSchema);
 }
 
-export const { getItems: getMeals } = crudActions(Meal);
+export const {
+  getItems: getMeals,
+  createItem: createMeal,
+  updateItem: updateMeal,
+  deleteItem: deleteMeal,
+} = crudActions(Meal);

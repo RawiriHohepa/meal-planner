@@ -18,4 +18,9 @@ try {
   Portion = model<IPortion>("Portion", portionSchema);
 }
 
-export const { getItems: getPortions } = crudActions(Portion);
+export const {
+  getItems: getPortions,
+  createItem: createPortion,
+  updateItem: updatePortion,
+  deleteItem: deletePortion,
+} = crudActions(Portion);
