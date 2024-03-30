@@ -22,6 +22,8 @@ spec:
                   $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Monday
                 name: Monday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.monday.name
             - component: Select
               name: tuesday
               props:
@@ -29,6 +31,8 @@ spec:
                   $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Tuesday
                 name: Tuesday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.tuesday.name
             - component: Select
               name: wednesday
               props:
@@ -36,6 +40,8 @@ spec:
                   $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 name: Wednesday
                 label: Wednesday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.wednesday.name
             - component: Select
               name: thursday
               props:
@@ -43,6 +49,8 @@ spec:
                   $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Thursday
                 name: Thursday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.thursday.name
             - component: Select
               name: friday
               props:
@@ -50,6 +58,8 @@ spec:
                   $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Friday
                 name: Friday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.friday.name
             - component: Select
               name: saturday
               props:
@@ -57,6 +67,8 @@ spec:
                   $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Saturday
                 name: Saturday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.saturday.name
             - component: Select
               name: sunday
               props:
@@ -64,6 +76,8 @@ spec:
                   $$jsExpression: getMeals.data.records.map(row => row.name).sort()
                 label: Sunday
                 name: Sunday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.sunday.name
       props:
         hasResetButton: true
         formControlsFullWidth: false
@@ -133,3 +147,11 @@ spec:
         - name: plan
           value:
             $$jsExpression: planForm.value
+    - name: getSelectedMeals
+      mode: query
+      query:
+        function: functions.ts#getSelectedMeals
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b66b2905078fad3092e5

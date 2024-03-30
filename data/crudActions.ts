@@ -15,6 +15,7 @@ const mongooseCrudActions = <IMongooseModel>(
   };
 
   const getItem = async (id: string) => {
+    await connectToDb();
     return await MongooseModel.findById(id);
   };
 
