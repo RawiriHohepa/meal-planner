@@ -1,0 +1,161 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mui/mui-toolpad/v0.1.53/docs/schemas/v1/definitions.json#properties/Page
+
+apiVersion: v1
+kind: page
+spec:
+  title: Default page
+  alias:
+    - G97DVk1
+  content:
+    - component: Form
+      name: planForm
+      children:
+        - component: PageRow
+          name: days
+          props:
+            justifyContent: start
+          children:
+            - component: Select
+              name: monday
+              props:
+                options:
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                label: Monday
+                name: Monday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.monday
+            - component: Select
+              name: tuesday
+              props:
+                options:
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                label: Tuesday
+                name: Tuesday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.tuesday
+            - component: Select
+              name: wednesday
+              props:
+                options:
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                name: Wednesday
+                label: Wednesday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.wednesday
+            - component: Select
+              name: thursday
+              props:
+                options:
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                label: Thursday
+                name: Thursday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.thursday
+            - component: Select
+              name: friday
+              props:
+                options:
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                label: Friday
+                name: Friday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.friday
+            - component: Select
+              name: saturday
+              props:
+                options:
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                label: Saturday
+                name: Saturday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.saturday
+            - component: Select
+              name: sunday
+              props:
+                options:
+                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                label: Sunday
+                name: Sunday
+                defaultValue:
+                  $$jsExpression: getSelectedMeals.data.sunday
+      props:
+        hasResetButton: true
+        formControlsFullWidth: false
+        onSubmit:
+          $$jsExpressionAction: |-
+            await updatePlanner.fetch();
+            await getSelectedMeals.refetch();
+        submitButtonText: Save
+    - component: DataGrid
+      name: mealsTable
+      props:
+        rowsSource: dataProvider
+        dataProviderId: meals.ts:default
+        columns:
+          - field: _id
+            type: string
+            width: 230
+          - field: portionIds
+            type: json
+          - field: name
+            type: string
+          - field: portions
+            type: json
+        rowIdField: _id
+    - component: DataGrid
+      name: portionsTable
+      props:
+        rowsSource: dataProvider
+        dataProviderId: portions.ts:default
+        columns:
+          - field: _id
+            type: string
+            width: 230
+          - field: ingredientId
+            type: string
+          - field: amount
+            type: number
+          - field: unit
+            type: string
+          - field: ingredient
+            type: string
+        rowIdField: _id
+    - component: DataGrid
+      name: ingredientsTable
+      props:
+        rowsSource: dataProvider
+        dataProviderId: ingredients.ts:default
+        columns:
+          - field: _id
+            type: string
+            width: 230
+          - field: name
+            type: string
+          - field: unit
+            type: string
+        rowIdField: _id
+  queries:
+    - name: getMeals
+      mode: query
+      query:
+        function: meals.ts#getMealRecords
+        kind: local
+    - name: updatePlanner
+      mode: mutation
+      query:
+        function: planner.ts#updatePlanner
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b66b2905078fad3092e5
+        - name: plan
+          value:
+            $$jsExpression: planForm.value
+    - name: getSelectedMeals
+      mode: query
+      query:
+        function: planner.ts#getSelectedMeals
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b66b2905078fad3092e5
