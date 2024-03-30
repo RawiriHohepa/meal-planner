@@ -83,7 +83,7 @@ spec:
         formControlsFullWidth: false
         onSubmit:
           $$jsExpressionAction: |-
-            await updatePlanner.call();
+            await updatePlanner.fetch();
             await getSelectedMeals.refetch();
         submitButtonText: Save
     - component: DataGrid
