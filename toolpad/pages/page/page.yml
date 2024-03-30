@@ -143,7 +143,7 @@ spec:
     - name: updatePlanner
       mode: mutation
       query:
-        function: functions.ts#updatePlanner
+        function: planner.ts#updatePlanner
         kind: local
       parameters:
         - name: _id
@@ -154,7 +154,7 @@ spec:
     - name: getSelectedMeals
       mode: query
       query:
-        function: functions.ts#getSelectedMeals
+        function: planner.ts#getSelectedMeals
         kind: local
       parameters:
         - name: _id
