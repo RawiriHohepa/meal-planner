@@ -23,7 +23,7 @@ spec:
                 label: Monday
                 name: Monday
                 defaultValue:
-                  $$jsExpression: getSelectedMeals.data.monday.name
+                  $$jsExpression: getSelectedMeals.data.monday
             - component: Select
               name: tuesday
               props:
@@ -32,7 +32,7 @@ spec:
                 label: Tuesday
                 name: Tuesday
                 defaultValue:
-                  $$jsExpression: getSelectedMeals.data.tuesday.name
+                  $$jsExpression: getSelectedMeals.data.tuesday
             - component: Select
               name: wednesday
               props:
@@ -41,7 +41,7 @@ spec:
                 name: Wednesday
                 label: Wednesday
                 defaultValue:
-                  $$jsExpression: getSelectedMeals.data.wednesday.name
+                  $$jsExpression: getSelectedMeals.data.wednesday
             - component: Select
               name: thursday
               props:
@@ -50,7 +50,7 @@ spec:
                 label: Thursday
                 name: Thursday
                 defaultValue:
-                  $$jsExpression: getSelectedMeals.data.thursday.name
+                  $$jsExpression: getSelectedMeals.data.thursday
             - component: Select
               name: friday
               props:
@@ -59,7 +59,7 @@ spec:
                 label: Friday
                 name: Friday
                 defaultValue:
-                  $$jsExpression: getSelectedMeals.data.friday.name
+                  $$jsExpression: getSelectedMeals.data.friday
             - component: Select
               name: saturday
               props:
@@ -68,7 +68,7 @@ spec:
                 label: Saturday
                 name: Saturday
                 defaultValue:
-                  $$jsExpression: getSelectedMeals.data.saturday.name
+                  $$jsExpression: getSelectedMeals.data.saturday
             - component: Select
               name: sunday
               props:
@@ -77,12 +77,14 @@ spec:
                 label: Sunday
                 name: Sunday
                 defaultValue:
-                  $$jsExpression: getSelectedMeals.data.sunday.name
+                  $$jsExpression: getSelectedMeals.data.sunday
       props:
         hasResetButton: true
         formControlsFullWidth: false
         onSubmit:
-          $$jsExpressionAction: savePlan.call()
+          $$jsExpressionAction: |-
+            await updatePlanner.call();
+            await getSelectedMeals.call();
         submitButtonText: Save
     - component: DataGrid
       name: mealsTable
@@ -138,12 +140,14 @@ spec:
       query:
         function: meals.ts#getMealRecords
         kind: local
-    - name: savePlan
+    - name: updatePlanner
       mode: mutation
       query:
-        function: functions.ts#savePlan
+        function: functions.ts#updatePlanner
         kind: local
       parameters:
+        - name: _id
+          value: 65a0b66b2905078fad3092e5
         - name: plan
           value:
             $$jsExpression: planForm.value

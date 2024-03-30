@@ -1,28 +1,50 @@
 import { getMealRecords } from "./meals";
-import { getPlanner } from "../../data/planner";
+import {
+  ISelectedMeals,
+  getPlanner,
+  updatePlanner as updatePlannerData,
+} from "../../data/planner";
 
-export const savePlan = async (plan: any) => {
+export const updatePlanner = async (_id: string, plan: any) => {
+  // console.log(plan);
+  const planner = await getPlanner(_id);
   const meals = (await getMealRecords()).records;
-  let populatedPlan = {};
 
+  console.log(planner);
+  if (!planner) return;
+
+  let populatedPlan: ISelectedMeals = {
+    monday: "",
+    tuesday: "",
+    wednesday: "",
+    thursday: "",
+    friday: "",
+    saturday: "",
+    sunday: "",
+  };
   Object.entries(plan).forEach(([day, name]) => {
-    populatedPlan[day] = meals.find((row) => row.name === name);
+    const meal = meals.find((meal) => meal.name === name);
+    populatedPlan[day.toLowerCase()] = meal?._id.toString() || "";
   });
 
   console.log(populatedPlan);
+  const result = await updatePlannerData(_id, {
+    name: planner.name,
+    selectedMeals: populatedPlan,
+  });
+  console.log(result);
 };
 
 export const getSelectedMeals = async (_id: string) => {
   const planner = await getPlanner(_id);
   const meals = (await getMealRecords()).records;
 
-  const selectedMeals = planner?.selectedMeals;
-  if (!selectedMeals) return;
+  if (!planner) return;
 
   let populatedPlan = {};
-
-  Object.entries(selectedMeals).forEach(([day, mealId]) => {
-    populatedPlan[day] = meals.find((meal) => meal._id.equals(mealId));
+  Object.entries(planner.selectedMeals).forEach(([day, mealId]) => {
+    const meal = meals.find((meal) => meal._id.equals(mealId));
+    populatedPlan[day] = meal?.name;
   });
 
   return populatedPlan;

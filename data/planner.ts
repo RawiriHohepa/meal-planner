@@ -1,7 +1,7 @@
 import { Model, Schema, model } from "mongoose";
 import crudActions from "./crudActions";
 
-interface ISelectedMeals {
+export interface ISelectedMeals {
   monday: string;
   tuesday: string;
   wednesday: string;
@@ -36,4 +36,5 @@ try {
   Planner = model<IPlanner>("Planner", plannerSchema);
 }
 
-export const { getItem: getPlanner } = crudActions(Planner);
+export const { getItem: getPlanner, updateItem: updatePlanner } =
+  crudActions(Planner);
