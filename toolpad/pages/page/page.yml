@@ -84,7 +84,7 @@ spec:
         onSubmit:
           $$jsExpressionAction: |-
             await updatePlanner.call();
-            await getSelectedMeals.call();
+            await getSelectedMeals.refetch();
         submitButtonText: Save
     - component: DataGrid
       name: mealsTable

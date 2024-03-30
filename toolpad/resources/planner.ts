@@ -6,11 +6,9 @@ import {
 } from "../../data/planner";
 
 export const updatePlanner = async (_id: string, plan: any) => {
-  // console.log(plan);
   const planner = await getPlanner(_id);
   const meals = (await getMealRecords()).records;
 
-  console.log(planner);
   if (!planner) return;
 
   let populatedPlan: ISelectedMeals = {
@@ -27,12 +25,10 @@ export const updatePlanner = async (_id: string, plan: any) => {
     populatedPlan[day.toLowerCase()] = meal?._id.toString() || "";
   });
 
-  console.log(populatedPlan);
-  const result = await updatePlannerData(_id, {
+  await updatePlannerData(_id, {
     name: planner.name,
     selectedMeals: populatedPlan,
   });
-  console.log(result);
 };
 
 export const getSelectedMeals = async (_id: string) => {
