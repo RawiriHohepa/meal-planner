@@ -1,0 +1,322 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mui/mui-toolpad/v0.1.53/docs/schemas/v1/definitions.json#properties/Page
+
+apiVersion: v1
+kind: page
+spec:
+  title: Planners
+  display: shell
+  authorization:
+    allowAll: true
+  content:
+    - component: Text
+      name: ThisWeek
+      props:
+        value: This Week
+    - component: Form
+      name: planFormThisWeek
+      children:
+        - component: PageRow
+          name: days
+          props:
+            justifyContent: start
+          children:
+            - component: Select
+              name: monday
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Monday
+                name: Monday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsThisWeek.data.monday
+            - component: Select
+              name: tuesday
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Tuesday
+                name: Tuesday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsThisWeek.data.tuesday
+            - component: Select
+              name: wednesday
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                name: Wednesday
+                label: Wednesday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsThisWeek.data.wednesday
+            - component: Select
+              name: thursday
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Thursday
+                name: Thursday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsThisWeek.data.thursday
+            - component: Select
+              name: friday
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Friday
+                name: Friday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsThisWeek.data.friday
+            - component: Select
+              name: saturday
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Saturday
+                name: Saturday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsThisWeek.data.saturday
+            - component: Select
+              name: sunday
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Sunday
+                name: Sunday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsThisWeek.data.sunday
+      props:
+        hasResetButton: false
+        formControlsFullWidth: false
+        onSubmit:
+          $$jsExpressionAction: |-
+            await updatePlannerThisWeek.fetch();
+            await getSelectedMealsThisWeek.refetch();
+        submitButtonText: Save
+    - component: Text
+      name: NextWeek
+      props:
+        value: Next Week
+    - component: Form
+      name: planFormNextWeek
+      children:
+        - component: PageRow
+          name: days1
+          props:
+            justifyContent: start
+          children:
+            - component: Select
+              name: monday1
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Monday
+                name: Monday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextWeek.data.monday
+            - component: Select
+              name: tuesday1
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Tuesday
+                name: Tuesday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextWeek.data.tuesday
+            - component: Select
+              name: wednesday1
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                name: Wednesday
+                label: Wednesday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextWeek.data.wednesday
+            - component: Select
+              name: thursday1
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Thursday
+                name: Thursday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextWeek.data.thursday
+            - component: Select
+              name: friday1
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Friday
+                name: Friday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextWeek.data.friday
+            - component: Select
+              name: saturday1
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Saturday
+                name: Saturday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextWeek.data.saturday
+            - component: Select
+              name: sunday1
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Sunday
+                name: Sunday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextWeek.data.sunday
+      props:
+        hasResetButton: false
+        formControlsFullWidth: false
+        onSubmit:
+          $$jsExpressionAction: |-
+            await updatePlannerNextWeek.fetch();
+            await getSelectedMealsNextWeek.refetch();
+        submitButtonText: Save
+    - component: Text
+      name: NextNextWeek
+      props:
+        value: Next Next Week
+    - component: Form
+      name: planFormNextNextWeek
+      children:
+        - component: PageRow
+          name: days2
+          props:
+            justifyContent: start
+          children:
+            - component: Select
+              name: monday2
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Monday
+                name: Monday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextNextWeek.data.monday
+            - component: Select
+              name: tuesday2
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Tuesday
+                name: Tuesday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextNextWeek.data.tuesday
+            - component: Select
+              name: wednesday2
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                name: Wednesday
+                label: Wednesday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextNextWeek.data.wednesday
+            - component: Select
+              name: thursday2
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Thursday
+                name: Thursday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextNextWeek.data.thursday
+            - component: Select
+              name: friday2
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Friday
+                name: Friday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextNextWeek.data.friday
+            - component: Select
+              name: saturday2
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Saturday
+                name: Saturday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextNextWeek.data.saturday
+            - component: Select
+              name: sunday2
+              props:
+                options:
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
+                label: Sunday
+                name: Sunday
+                defaultValue:
+                  $$jsExpression: getSelectedMealsNextNextWeek.data.sunday
+      props:
+        hasResetButton: false
+        formControlsFullWidth: false
+        onSubmit:
+          $$jsExpressionAction: |-
+            await updatePlannerNextNextWeek.fetch();
+            await getSelectedMealsNextNextWeek.refetch();
+        submitButtonText: Save
+  queries:
+    - name: getMeals
+      mode: query
+      query:
+        function: meals.ts#getMealRecords
+        kind: local
+    - name: updatePlannerThisWeek
+      mode: mutation
+      query:
+        function: planner.ts#updatePlanner
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b66b2905078fad3092e5
+        - name: plan
+          value:
+            $$jsExpression: planFormThisWeek.value
+    - name: updatePlannerNextWeek
+      mode: mutation
+      query:
+        function: planner.ts#updatePlanner
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b675d8163d1c4b6219f8
+        - name: plan
+          value:
+            $$jsExpression: planFormNextWeek.value
+    - name: updatePlannerNextNextWeek
+      mode: mutation
+      query:
+        function: planner.ts#updatePlanner
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b67b067a380212781ada
+        - name: plan
+          value:
+            $$jsExpression: planFormNextNextWeek.value
+    - name: getSelectedMealsThisWeek
+      mode: query
+      query:
+        function: planner.ts#getSelectedMeals
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b66b2905078fad3092e5
+    - name: getSelectedMealsNextWeek
+      mode: query
+      query:
+        function: planner.ts#getSelectedMeals
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b675d8163d1c4b6219f8
+    - name: getSelectedMealsNextNextWeek
+      mode: query
+      query:
+        function: planner.ts#getSelectedMeals
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b67b067a380212781ada

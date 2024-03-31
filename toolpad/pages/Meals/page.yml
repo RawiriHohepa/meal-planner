@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mui/mui-toolpad/v0.1.53/docs/schemas/v1/definitions.json#properties/Page
+
+apiVersion: v1
+kind: page
+spec:
+  title: Meals
+  display: shell
+  authorization:
+    allowAll: true
+  content:
+    - component: DataGrid
+      name: mealsTable
+      props:
+        rowsSource: dataProvider
+        dataProviderId: meals.ts:default
+        columns:
+          - field: _id
+            type: string
+            width: 230
+          - field: portionIds
+            type: json
+          - field: name
+            type: string
+          - field: portions
+            type: json
+        rowIdField: _id
