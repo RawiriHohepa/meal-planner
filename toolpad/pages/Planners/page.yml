@@ -8,6 +8,10 @@ spec:
   authorization:
     allowAll: true
   content:
+    - component: Text
+      name: ThisWeek
+      props:
+        value: This Week
     - component: Form
       name: planFormThisWeek
       children:
@@ -87,6 +91,10 @@ spec:
             await updatePlannerThisWeek.fetch();
             await getSelectedMealsThisWeek.refetch();
         submitButtonText: Save
+    - component: Text
+      name: NextWeek
+      props:
+        value: Next Week
     - component: Form
       name: planFormNextWeek
       children:
@@ -166,6 +174,10 @@ spec:
             await updatePlannerNextWeek.fetch();
             await getSelectedMealsNextWeek.refetch();
         submitButtonText: Save
+    - component: Text
+      name: NextNextWeek
+      props:
+        value: Next Next Week
     - component: Form
       name: planFormNextNextWeek
       children:
