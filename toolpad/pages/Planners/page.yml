@@ -20,7 +20,7 @@ spec:
               name: monday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Monday
                 name: Monday
                 defaultValue:
@@ -29,7 +29,7 @@ spec:
               name: tuesday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Tuesday
                 name: Tuesday
                 defaultValue:
@@ -38,7 +38,7 @@ spec:
               name: wednesday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 name: Wednesday
                 label: Wednesday
                 defaultValue:
@@ -47,7 +47,7 @@ spec:
               name: thursday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Thursday
                 name: Thursday
                 defaultValue:
@@ -56,7 +56,7 @@ spec:
               name: friday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Friday
                 name: Friday
                 defaultValue:
@@ -65,7 +65,7 @@ spec:
               name: saturday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Saturday
                 name: Saturday
                 defaultValue:
@@ -74,7 +74,7 @@ spec:
               name: sunday
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Sunday
                 name: Sunday
                 defaultValue:
@@ -99,7 +99,7 @@ spec:
               name: monday1
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Monday
                 name: Monday
                 defaultValue:
@@ -108,7 +108,7 @@ spec:
               name: tuesday1
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Tuesday
                 name: Tuesday
                 defaultValue:
@@ -117,7 +117,7 @@ spec:
               name: wednesday1
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 name: Wednesday
                 label: Wednesday
                 defaultValue:
@@ -126,7 +126,7 @@ spec:
               name: thursday1
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Thursday
                 name: Thursday
                 defaultValue:
@@ -135,7 +135,7 @@ spec:
               name: friday1
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Friday
                 name: Friday
                 defaultValue:
@@ -144,7 +144,7 @@ spec:
               name: saturday1
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Saturday
                 name: Saturday
                 defaultValue:
@@ -153,7 +153,7 @@ spec:
               name: sunday1
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Sunday
                 name: Sunday
                 defaultValue:
@@ -178,7 +178,7 @@ spec:
               name: monday2
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Monday
                 name: Monday
                 defaultValue:
@@ -187,7 +187,7 @@ spec:
               name: tuesday2
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Tuesday
                 name: Tuesday
                 defaultValue:
@@ -196,7 +196,7 @@ spec:
               name: wednesday2
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 name: Wednesday
                 label: Wednesday
                 defaultValue:
@@ -205,7 +205,7 @@ spec:
               name: thursday2
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Thursday
                 name: Thursday
                 defaultValue:
@@ -214,7 +214,7 @@ spec:
               name: friday2
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Friday
                 name: Friday
                 defaultValue:
@@ -223,7 +223,7 @@ spec:
               name: saturday2
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Saturday
                 name: Saturday
                 defaultValue:
@@ -232,7 +232,7 @@ spec:
               name: sunday2
               props:
                 options:
-                  $$jsExpression: getMeals.data.records.map(row => row.name).sort()
+                  $$jsExpression: '["None", ...getMeals.data.records.map(row => row.name).sort()]'
                 label: Sunday
                 name: Sunday
                 defaultValue:

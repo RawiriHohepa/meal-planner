@@ -21,6 +21,11 @@ export const updatePlanner = async (_id: string, plan: any) => {
     sunday: "",
   };
   Object.entries(plan).forEach(([day, name]) => {
+    if (name === "None") {
+      populatedPlan[day.toLowerCase()] = "";
+      return;
+    }
+
     const meal = meals.find((meal) => meal.name === name);
     populatedPlan[day.toLowerCase()] = meal?._id.toString() || "";
   });
