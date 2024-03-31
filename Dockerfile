@@ -17,9 +17,12 @@ COPY package-lock.json /usr/src/app
 RUN npm ci
 
 # Get all the code needed to run the app
-# COPY . /usr/src/app/
-COPY toolpad /usr/src/app/toolpad
-COPY .env /usr/src/app
+COPY . /usr/src/app
+# COPY toolpad /usr/src/app/toolpad
+# COPY .env /usr/src/app
+
+# Build the app
+RUN npm run build
 
 # Expose the port the app runs in
 # EXPOSE 3000
