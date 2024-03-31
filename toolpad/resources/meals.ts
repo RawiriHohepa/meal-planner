@@ -14,18 +14,13 @@ export const getMealRecords = async () => {
 
   const records = meals.map((mealObject) => {
     const meal = mealObject.toJSON();
-    const portions = meal.portionIds.map((portionId) =>
-      portionRecords.find((portion) => portion._id.equals(portionId))
-    );
-
-    const portionsFormatted = portions.map(
-      (portion) =>
-        `${portion?.amount}${portion?.unit || ""} ${portion?.ingredient}`
+    const portions = portionRecords.filter((portionRecord) =>
+      meal.portionIds.includes(portionRecord._id.toString())
     );
 
     return {
       ...meal,
-      portions: portionsFormatted,
+      portions,
     };
   });
 

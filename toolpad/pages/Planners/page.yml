@@ -257,6 +257,22 @@ spec:
             await updatePlannerNextNextWeek.fetch();
             await getSelectedMealsNextNextWeek.refetch();
         submitButtonText: Save
+    - component: Text
+      name: ShoppingListThisWeek
+      props:
+        value: Shopping List This Week
+    - component: DataGrid
+      name: shoppingListThisWeek
+      props:
+        rows:
+          $$jsExpression: getShoppingListThisWeek.data
+        columns:
+          - field: portion
+            type: string
+          - field: amount
+            type: number
+          - field: unit
+            type: string
   queries:
     - name: getMeals
       mode: query
@@ -320,3 +336,11 @@ spec:
       parameters:
         - name: _id
           value: 65a0b67b067a380212781ada
+    - name: getShoppingListThisWeek
+      mode: query
+      query:
+        function: planner.ts#getShoppingList
+        kind: local
+      parameters:
+        - name: _id
+          value: 65a0b66b2905078fad3092e5

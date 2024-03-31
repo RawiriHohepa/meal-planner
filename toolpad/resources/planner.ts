@@ -4,6 +4,7 @@ import {
   getPlanner,
   updatePlanner as updatePlannerData,
 } from "../../data/planner";
+import { getPortionRecords } from "./portions";
 
 export const updatePlanner = async (_id: string, plan: any) => {
   const planner = await getPlanner(_id);
@@ -49,4 +50,38 @@ export const getSelectedMeals = async (_id: string) => {
   });
 
   return populatedPlan;
+};
+
+export const getShoppingList = async (_id: string) => {
+  const planner = await getPlanner(_id);
+  const meals = (await getMealRecords()).records;
+  const portions = (await getPortionRecords()).records;
+
+  if (!planner) return;
+
+  let totalledPortions = {};
+  Object.values(planner.selectedMeals)
+    .filter((selectedMealId) => !!selectedMealId)
+    .forEach((selectedMealId) => {
+      const selectedMeal = meals.find((meal) =>
+        meal._id.equals(selectedMealId)
+      );
+      if (!selectedMeal) return;
+      selectedMeal.portions.forEach((selectedPortion) => {
+        const selectedPortionId = selectedPortion._id.toString();
+        totalledPortions[selectedPortionId] =
+          (totalledPortions[selectedPortionId] || 0) + selectedPortion.amount;
+      });
+    });
+
+  return Object.entries(totalledPortions).map(([totalledPortionId, amount]) => {
+    const totalledPortion = portions.find((portion) =>
+      portion._id.equals(totalledPortionId)
+    );
+    return {
+      portion: totalledPortion?.ingredient,
+      amount,
+      unit: totalledPortion?.unit,
+    };
+  });
 };
