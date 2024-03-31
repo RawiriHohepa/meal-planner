@@ -1,0 +1,13 @@
+services:
+  frontend:
+    restart: always
+    build:
+      target: development
+    stdin_open: true
+    volumes:
+      - /usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
