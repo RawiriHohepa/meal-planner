@@ -1,0 +1,24 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/mui/mui-toolpad/v0.1.53/docs/schemas/v1/definitions.json#properties/Page
+
+apiVersion: v1
+kind: page
+spec:
+  title: Ingredients
+  display: shell
+  authorization:
+    allowAll: true
+  content:
+    - component: DataGrid
+      name: ingredientsTable
+      props:
+        rowsSource: dataProvider
+        dataProviderId: ingredients.ts:default
+        columns:
+          - field: _id
+            type: string
+            width: 230
+          - field: name
+            type: string
+          - field: unit
+            type: string
+        rowIdField: _id

@@ -3,9 +3,10 @@
 apiVersion: v1
 kind: page
 spec:
-  title: Default page
-  alias:
-    - G97DVk1
+  title: Planners
+  display: shell
+  authorization:
+    allowAll: true
   content:
     - component: Form
       name: planForm
@@ -86,54 +87,6 @@ spec:
             await updatePlanner.fetch();
             await getSelectedMeals.refetch();
         submitButtonText: Save
-    - component: DataGrid
-      name: mealsTable
-      props:
-        rowsSource: dataProvider
-        dataProviderId: meals.ts:default
-        columns:
-          - field: _id
-            type: string
-            width: 230
-          - field: portionIds
-            type: json
-          - field: name
-            type: string
-          - field: portions
-            type: json
-        rowIdField: _id
-    - component: DataGrid
-      name: portionsTable
-      props:
-        rowsSource: dataProvider
-        dataProviderId: portions.ts:default
-        columns:
-          - field: _id
-            type: string
-            width: 230
-          - field: ingredientId
-            type: string
-          - field: amount
-            type: number
-          - field: unit
-            type: string
-          - field: ingredient
-            type: string
-        rowIdField: _id
-    - component: DataGrid
-      name: ingredientsTable
-      props:
-        rowsSource: dataProvider
-        dataProviderId: ingredients.ts:default
-        columns:
-          - field: _id
-            type: string
-            width: 230
-          - field: name
-            type: string
-          - field: unit
-            type: string
-        rowIdField: _id
   queries:
     - name: getMeals
       mode: query
