@@ -1,10 +1,10 @@
 import { getMealRecords } from "./meals";
+import { getIngredientRecords } from "./ingredients";
 import {
   ISelectedMeals,
   getPlanner,
   updatePlanner as updatePlannerData,
 } from "../../data/planner";
-import { getPortionRecords } from "./portions";
 
 export const updatePlanner = async (_id: string, plan: any) => {
   const planner = await getPlanner(_id);
@@ -55,11 +55,11 @@ export const getSelectedMeals = async (_id: string) => {
 export const getShoppingList = async (_id: string) => {
   const planner = await getPlanner(_id);
   const meals = (await getMealRecords()).records;
-  const portions = (await getPortionRecords()).records;
+  const ingredients = (await getIngredientRecords()).records;
 
   if (!planner) return;
 
-  let totalledPortions = {};
+  let totalledIngredients = {};
   Object.values(planner.selectedMeals)
     .filter((selectedMealId) => !!selectedMealId)
     .forEach((selectedMealId) => {
@@ -67,21 +67,25 @@ export const getShoppingList = async (_id: string) => {
         meal._id.equals(selectedMealId)
       );
       if (!selectedMeal) return;
+
       selectedMeal.portions.forEach((selectedPortion) => {
-        const selectedPortionId = selectedPortion._id.toString();
-        totalledPortions[selectedPortionId] =
-          (totalledPortions[selectedPortionId] || 0) + selectedPortion.amount;
+        const selectedIngredientId = selectedPortion.ingredientId;
+        totalledIngredients[selectedIngredientId] =
+          (totalledIngredients[selectedIngredientId] || 0) +
+          selectedPortion.amount;
       });
     });
 
-  return Object.entries(totalledPortions).map(([totalledPortionId, amount]) => {
-    const totalledPortion = portions.find((portion) =>
-      portion._id.equals(totalledPortionId)
-    );
-    return {
-      portion: totalledPortion?.ingredient,
-      amount,
-      unit: totalledPortion?.unit,
-    };
-  });
+  return Object.entries(totalledIngredients).map(
+    ([totalledIngredientId, amount]) => {
+      const totalledIngredient = ingredients.find((ingredient) =>
+        ingredient._id.equals(totalledIngredientId)
+      );
+      return {
+        ingredient: totalledIngredient?.name,
+        amount,
+        unit: totalledIngredient?.unit,
+      };
+    }
+  );
 };

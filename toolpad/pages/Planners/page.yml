@@ -267,7 +267,7 @@ spec:
         rows:
           $$jsExpression: getShoppingListThisWeek.data
         columns:
-          - field: portion
+          - field: ingredient
             type: string
           - field: amount
             type: number

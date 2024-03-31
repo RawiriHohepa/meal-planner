@@ -11,6 +11,8 @@ import {
   deleteIngredient,
 } from "../../data/ingredient";
 
+export { getIngredients as getIngredientRecords } from "../../data/ingredient";
+
 export default createDataProvider({
   getRecords: getIngredients,
   createRecord: createIngredient,
