@@ -4,10 +4,10 @@
 FROM node:lts-iron
 
 # Create app directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Get all the code needed to run the app
-COPY . /usr/src/app
+COPY . /app
 
 # Install dependecies
 RUN npm ci
